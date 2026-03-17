@@ -1,0 +1,338 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Options Analysis, Benefits and Economic Model" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-phase-banner">
+      <p class="govuk-phase-banner__content">
+        <strong class="govuk-tag govuk-phase-banner__content__tag">Alpha</strong>
+      </p>
+    </div>
+
+    <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="#">Your cases</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="#">vfds</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item" aria-current="page">
+          Options Analysis, Benefits and Economic Model
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-button-group govuk-!-margin-bottom-2" style="justify-content: space-between;">
+      <a class="govuk-back-link govuk-!-margin-bottom-0" href="#">Previous question</a>
+      <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" href="#" role="button" draggable="false">
+        Ask a question
+      </a>
+    </div>
+
+    <p class="govuk-body govuk-!-margin-bottom-2">Step 3 of 11</p>
+
+    <h1 class="govuk-heading-xl">
+      Options Analysis, Benefits and Economic Model
+    </h1>
+
+    <h2 class="govuk-heading-l">Options considered</h2>
+
+    <p class="govuk-body">
+      List all the options you considered, with their advantages and disadvantages. If this request is for a portfolio or programme, include references to the critical success factors you listed earlier.
+    </p>
+
+    <h3 class="govuk-heading-s">What happens next?</h3>
+
+    <p class="govuk-body">You will be asked to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>upload a costs and benefits model (in Excel or a similar format)</li>
+      <li>provide a summary of key data through this service</li>
+      <li>give a short narrative on any accounting treatment or adjustments</li>
+    </ul>
+
+    <form method="post" action="#" id="options-form" novalidate>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="options">
+          <span class="govuk-!-font-weight-bold">Options</span>
+        </label>
+
+        <div class="govuk-!-margin-top-2" style="border: 2px solid #0b0c0c;">
+          <div id="options-toolbar" role="toolbar" aria-label="Options formatting" style="display: flex; gap: 8px; align-items: center; padding: 8px; border-bottom: 1px solid #b1b4b6; background: #f3f2f1;">
+            <button type="button" class="govuk-link" data-format="bold" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-weight: 700; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Bold (Ctrl+B)">B</button>
+            <span aria-hidden="true" style="width: 1px; height: 20px; background: #b1b4b6;"></span>
+            <button type="button" class="govuk-link" data-list-type="bullets" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Bullets">•</button>
+            <button type="button" class="govuk-link" data-list-type="numbered" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Numbered">1.</button>
+            <button type="button" class="govuk-link" data-list-type="tick" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Tick">✔</button>
+            <button type="button" class="govuk-link" data-list-type="cross" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Cross">✘</button>
+          </div>
+          <div
+            id="options-editor"
+            contenteditable="true"
+            role="textbox"
+            aria-multiline="true"
+            aria-label="Options"
+            style="padding: 10px; white-space: pre-wrap; min-height: 180px; outline: none; font-family: 'GDS Transport', arial, sans-serif; font-size: 1.1875rem; line-height: 1.31579;"
+          >{{ data.optionsText }}</div>
+        </div>
+
+        <textarea id="options" name="optionsText" hidden>{{ data.optionsText }}</textarea>
+      </div>
+    </form>
+
+    <script>
+      (function () {
+        var form = document.getElementById('options-form')
+        var editor = document.getElementById('options-editor')
+        var hidden = document.getElementById('options')
+        var toolbar = document.getElementById('options-toolbar')
+        if (!form || !editor || !hidden || !toolbar) return
+
+        function sync () {
+          hidden.value = editor.innerText.replace(/\u00A0/g, ' ')
+        }
+
+        var listState = { type: null, indent: 0, number: 1 }
+
+        function setPressedStyles () {
+          toolbar.querySelectorAll('button[aria-pressed]').forEach(function (btn) {
+            var pressed = btn.getAttribute('aria-pressed') === 'true'
+            btn.style.background = pressed ? '#1d70b8' : 'transparent'
+            btn.style.color = pressed ? '#ffffff' : '#0b0c0c'
+          })
+        }
+
+        function setActiveListType (type) {
+          listState.type = listState.type === type ? null : type
+          listState.indent = 0
+          if (listState.type !== 'numbered') listState.number = 1
+
+          toolbar.querySelectorAll('button[data-list-type]').forEach(function (btn) {
+            var pressed = listState.type === btn.getAttribute('data-list-type')
+            btn.setAttribute('aria-pressed', pressed ? 'true' : 'false')
+          })
+          setPressedStyles()
+        }
+
+        function prefixForState (numberOverride) {
+          if (!listState.type) return ''
+
+          var indent = listState.indent
+          indent = Math.min(indent, listState.type === 'bullets' ? 1 : 0)
+
+          if (listState.type === 'bullets') return (indent === 1 ? '  ' : '') + '• '
+          if (listState.type === 'numbered') {
+            var n = typeof numberOverride === 'number' ? numberOverride : listState.number
+            return (indent === 1 ? '  ' : '') + String(n) + '. '
+          }
+          if (listState.type === 'tick') return (indent === 1 ? '  ' : '') + '✔ '
+          if (listState.type === 'cross') return (indent === 1 ? '  ' : '') + '✘ '
+          return ''
+        }
+
+        function getCaretOffsetInText (el) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection || selection.rangeCount === 0) return 0
+          var range = selection.getRangeAt(0)
+          var preRange = range.cloneRange()
+          preRange.selectNodeContents(el)
+          preRange.setEnd(range.startContainer, range.startOffset)
+          return preRange.toString().length
+        }
+
+        function setCaretOffsetInText (el, offset) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection) return
+
+          var range = document.createRange()
+          range.selectNodeContents(el)
+          range.collapse(true)
+
+          var currentOffset = 0
+          var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null)
+          var node
+          while ((node = walker.nextNode())) {
+            var len = node.nodeValue.length
+            if (currentOffset + len >= offset) {
+              range.setStart(node, Math.max(0, offset - currentOffset))
+              range.collapse(true)
+              selection.removeAllRanges()
+              selection.addRange(range)
+              return
+            }
+            currentOffset += len
+          }
+
+          selection.removeAllRanges()
+          selection.addRange(range)
+        }
+
+        function stripExistingListPrefix (line) {
+          return String(line)
+            .replace(/^(\s*)(?:•|✔|✘)\s+/, '$1')
+            .replace(/^(\s*)\d+\.\s+/, '$1')
+        }
+
+        function getCurrentLineInfo () {
+          var text = editor.innerText.replace(/\u00A0/g, ' ')
+          var caret = getCaretOffsetInText(editor)
+          var lineStart = text.lastIndexOf('\n', Math.max(0, caret - 1)) + 1
+          var nextNewline = text.indexOf('\n', lineStart)
+          var lineEnd = nextNewline === -1 ? text.length : nextNewline
+          var lineText = text.slice(lineStart, lineEnd)
+          return { text: text, caret: caret, lineStart: lineStart, lineEnd: lineEnd, lineText: lineText }
+        }
+
+        function ensureNumberFromCurrentLine () {
+          var info = getCurrentLineInfo()
+          var match = info.lineText.match(/^\s*(\d+)\.\s/)
+          if (match) listState.number = parseInt(match[1], 10)
+        }
+
+        function insertTextAtCursor (text) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection || selection.rangeCount === 0) {
+            editor.appendChild(document.createTextNode(text))
+            return
+          }
+
+          var range = selection.getRangeAt(0)
+          range.deleteContents()
+          range.insertNode(document.createTextNode(text))
+          range.collapse(false)
+          selection.removeAllRanges()
+          selection.addRange(range)
+        }
+
+        function selectionIsWithinEditor (selection) {
+          if (!selection || selection.rangeCount === 0) return false
+          var range = selection.getRangeAt(0)
+          return editor.contains(range.commonAncestorContainer)
+        }
+
+        function applyListPrefixToCurrentLine () {
+          if (!listState.type) return false
+          var info = getCurrentLineInfo()
+          if (listState.type === 'numbered') ensureNumberFromCurrentLine()
+
+          var prefix = prefixForState()
+          if (!prefix) return false
+
+          var originalLine = info.lineText
+          var withoutPrefix = stripExistingListPrefix(originalLine)
+          var content = withoutPrefix.replace(/^\s+/, '')
+          var newLine = content === '' ? prefix : (prefix + content)
+
+          var alreadySame =
+            (listState.type === 'bullets' && originalLine.trimStart().startsWith('• ')) ||
+            (listState.type === 'tick' && originalLine.trimStart().startsWith('✔ ')) ||
+            (listState.type === 'cross' && originalLine.trimStart().startsWith('✘ ')) ||
+            (listState.type === 'numbered' && /^\s*\d+\.\s/.test(originalLine))
+          if (alreadySame) return false
+
+          var updated = info.text.slice(0, info.lineStart) + newLine + info.text.slice(info.lineEnd)
+          editor.innerText = updated
+
+          var caretInLine = info.caret - info.lineStart
+          var removed = originalLine.length - withoutPrefix.length
+          var nextCaretInLine = prefix.length + Math.max(0, caretInLine - removed)
+          var nextCaret = info.lineStart + Math.min(newLine.length, nextCaretInLine)
+          setCaretOffsetInText(editor, nextCaret)
+          sync()
+          return true
+        }
+
+        function formatSelectedLines (prefix) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selectionIsWithinEditor(selection)) return false
+          if (selection.isCollapsed) return false
+
+          var selectedText = selection.toString()
+          if (!selectedText) return false
+
+          var lines = selectedText.split(/\r?\n/)
+          var n = listState.type === 'numbered' ? listState.number : null
+          var formatted = lines
+            .map(function (line) {
+              var stripped = stripExistingListPrefix(line)
+              var trimmed = stripped.replace(/^\s+/, '')
+              if (trimmed === '') return ''
+              if (listState.type === 'numbered') {
+                var linePrefix = prefixForState(n)
+                n = n + 1
+                return linePrefix + trimmed
+              }
+              return prefix + trimmed
+            })
+            .join('\n')
+
+          insertTextAtCursor(formatted)
+          sync()
+          return true
+        }
+
+        toolbar.addEventListener('click', function (e) {
+          var formatBtn = e.target && e.target.closest && e.target.closest('button[data-format]')
+          if (formatBtn && formatBtn.getAttribute('data-format') === 'bold') {
+            var selection = window.getSelection && window.getSelection()
+            if (selectionIsWithinEditor(selection)) {
+              editor.focus()
+              document.execCommand('bold')
+              sync()
+            }
+            return
+          }
+
+          var btn = e.target && e.target.closest && e.target.closest('button[data-list-type]')
+          if (!btn) return
+
+          editor.focus()
+          setActiveListType(btn.getAttribute('data-list-type'))
+          if (listState.type === 'numbered') ensureNumberFromCurrentLine()
+
+          var prefix = prefixForState()
+          if (prefix) {
+            var formatted = formatSelectedLines(prefix)
+            if (!formatted) applyListPrefixToCurrentLine()
+          }
+        })
+
+        editor.addEventListener('input', sync)
+
+        editor.addEventListener('keydown', function (e) {
+          if (e.key === 'Tab') {
+            if (!listState.type) return
+            e.preventDefault()
+
+            var maxIndent = listState.type === 'bullets' ? 1 : 0
+            listState.indent = Math.min(listState.indent + 1, maxIndent)
+            return
+          }
+
+          if (e.key === 'Enter') {
+            if (!listState.type) return
+            e.preventDefault()
+            if (listState.type === 'numbered') {
+              listState.number = Math.max(1, listState.number + 1)
+              insertTextAtCursor('\n' + prefixForState(listState.number))
+            } else {
+              insertTextAtCursor('\n' + prefixForState())
+            }
+            sync()
+          }
+        })
+
+        setPressedStyles()
+        sync()
+      })()
+    </script>
+  </div>
+</div>
+{% endblock %}
+
