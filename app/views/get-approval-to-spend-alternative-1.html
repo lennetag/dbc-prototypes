@@ -1,0 +1,494 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Options Analysis, Benefits and Economic Model" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-phase-banner">
+      <p class="govuk-phase-banner__content">
+        <strong class="govuk-tag govuk-phase-banner__content__tag">Alpha</strong>
+      </p>
+    </div>
+
+    <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="#">Your cases</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="#">vfds</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item" aria-current="page">
+          Options Analysis, Benefits and Economic Model
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-button-group govuk-!-margin-bottom-2" style="justify-content: space-between;">
+      <a class="govuk-back-link govuk-!-margin-bottom-0" href="#">Previous question</a>
+      <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" href="#" role="button" draggable="false">
+        Ask a question
+      </a>
+    </div>
+
+    <p class="govuk-body govuk-!-margin-bottom-2">Step 3 of 11</p>
+
+    <h1 class="govuk-heading-xl">
+      Options Analysis, Benefits and Economic Model
+    </h1>
+
+    <h2 class="govuk-heading-l">Options considered</h2>
+
+    <p class="govuk-body">
+      List all the options you considered, with their advantages and disadvantages. If this request is for a portfolio or programme, include references to the critical success factors you listed earlier.
+    </p>
+
+    <h3 class="govuk-heading-s">What happens next?</h3>
+
+    <p class="govuk-body">You will be asked to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>upload a costs and benefits model (in Excel or a similar format)</li>
+      <li>provide a summary of key data through this service</li>
+      <li>give a short narrative on any accounting treatment or adjustments</li>
+    </ul>
+
+    <div id="options-table-wrapper" class="govuk-!-margin-bottom-9">
+      <table class="govuk-table govuk-!-margin-top-6">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Option Name</th>
+            <th scope="col" class="govuk-table__header">Description</th>
+            <th scope="col" class="govuk-table__header">Shortlisted</th>
+            <th scope="col" class="govuk-table__header">Considerations</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body" id="options-table-body">
+          {% if data.options and data.options.length %}
+            {% for option in data.options %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a class="govuk-link" href="#">{{ option.optionName }}</a>
+                </td>
+                <td class="govuk-table__cell">{{ option.optionDescription }}</td>
+                <td class="govuk-table__cell">{{ option.shortlisted }}</td>
+                <td class="govuk-table__cell" style="white-space: pre-wrap;">{{ option.considerations }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">&nbsp;</td>
+              <td class="govuk-table__cell">&nbsp;</td>
+              <td class="govuk-table__cell">&nbsp;</td>
+              <td class="govuk-table__cell">&nbsp;</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <form method="post" action="/get-approval-to-spend/add" id="options-form" novalidate>
+      <div class="govuk-!-margin-bottom-4" style="border-left: 6px solid #b1b4b6; padding-left: 16px;">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="optionName">
+            <span class="govuk-!-font-weight-bold">Option name</span>
+          </label>
+          <input class="govuk-input" id="optionName" name="optionName" type="text" value="{{ data.optionName }}">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="optionDescription">
+            <span class="govuk-!-font-weight-bold">Description</span>
+          </label>
+          <input class="govuk-input" id="optionDescription" name="optionDescription" type="text" value="{{ data.optionDescription }}">
+        </div>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <h2 class="govuk-fieldset__heading">Shortlisted</h2>
+            </legend>
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="shortlisted-yes" name="shortlisted" type="radio" value="Yes" {{ "checked" if data.shortlisted == "Yes" }}>
+                <label class="govuk-label govuk-radios__label" for="shortlisted-yes">Yes</label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="shortlisted-no" name="shortlisted" type="radio" value="No" {{ "checked" if data.shortlisted == "No" }}>
+                <label class="govuk-label govuk-radios__label" for="shortlisted-no">No</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="considerations">
+            <span class="govuk-!-font-weight-bold">Considerations</span>
+          </label>
+          <div class="govuk-!-margin-top-2" style="border: 2px solid #0b0c0c;">
+            <div id="considerations-toolbar" role="toolbar" aria-label="Considerations formatting" style="display: flex; gap: 8px; align-items: center; padding: 8px; border-bottom: 1px solid #b1b4b6; background: #f3f2f1;">
+              <button type="button" class="govuk-link" data-format="bold" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-weight: 700; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Bold (Ctrl+B)">B</button>
+              <span aria-hidden="true" style="width: 1px; height: 20px; background: #b1b4b6;"></span>
+              <button type="button" class="govuk-link" data-list-type="bullets" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Bullets">•</button>
+              <button type="button" class="govuk-link" data-list-type="numbered" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Numbered">1.</button>
+              <button type="button" class="govuk-link" data-list-type="tick" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Tick">✔</button>
+              <button type="button" class="govuk-link" data-list-type="cross" aria-pressed="false" style="appearance: none; border: 0; background: transparent; cursor: pointer; padding: 6px 10px; border-radius: 4px; font-size: 1.1875rem; line-height: 1; min-width: 40px; min-height: 40px;" title="Cross">✘</button>
+            </div>
+            <div
+              id="considerations-editor"
+              contenteditable="true"
+              role="textbox"
+              aria-multiline="true"
+              aria-label="Considerations"
+              style="padding: 10px; white-space: pre-wrap; min-height: 120px; outline: none; font-family: 'GDS Transport', arial, sans-serif; font-size: 1.1875rem; line-height: 1.31579;"
+            >{{ data.considerations }}</div>
+          </div>
+
+          <textarea id="considerations" name="considerations" hidden>{{ data.considerations }}</textarea>
+        </div>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button" style="background-color: #ffdd00; color: #0b0c0c;">
+        Add
+      </button>
+    </form>
+
+    <script>
+      (function () {
+        var form = document.getElementById('options-form')
+        var tableWrapper = document.getElementById('options-table-wrapper')
+        var tableBody = document.getElementById('options-table-body')
+        var considerationsEditor = document.getElementById('considerations-editor')
+        var considerationsHidden = document.getElementById('considerations')
+        var toolbar = document.getElementById('considerations-toolbar')
+        if (!form || !tableWrapper || !tableBody) return
+        if (!considerationsEditor || !considerationsHidden || !toolbar) return
+
+        function escapeHtml (value) {
+          return String(value)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#39;')
+        }
+
+        var listState = { type: null, indent: 0, number: 1 }
+
+        function setPressedStyles () {
+          toolbar.querySelectorAll('button[aria-pressed]').forEach(function (btn) {
+            var pressed = btn.getAttribute('aria-pressed') === 'true'
+            btn.style.background = pressed ? '#1d70b8' : 'transparent'
+            btn.style.color = pressed ? '#ffffff' : '#0b0c0c'
+          })
+        }
+
+        function setActiveListType (type) {
+          listState.type = listState.type === type ? null : type
+          listState.indent = 0
+          if (listState.type !== 'numbered') {
+            listState.number = 1
+          }
+
+          toolbar.querySelectorAll('button[data-list-type]').forEach(function (btn) {
+            var pressed = listState.type === btn.getAttribute('data-list-type')
+            btn.setAttribute('aria-pressed', pressed ? 'true' : 'false')
+          })
+          setPressedStyles()
+        }
+
+        function clearActiveListType () {
+          listState.type = null
+          listState.indent = 0
+          listState.number = 1
+          toolbar.querySelectorAll('button[data-list-type]').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', 'false')
+          })
+          setPressedStyles()
+        }
+
+        function prefixForState (numberOverride) {
+          if (!listState.type) return ''
+
+          var indent = listState.indent
+          // Bullets allow 2 levels (parent/child). Others only allow a single level.
+          indent = Math.min(indent, listState.type === 'bullets' ? 1 : 0)
+
+          if (listState.type === 'bullets') {
+            return (indent === 1 ? '  ' : '') + '• '
+          }
+
+          if (listState.type === 'numbered') {
+            var n = typeof numberOverride === 'number' ? numberOverride : listState.number
+            return (indent === 1 ? '  ' : '') + String(n) + '. '
+          }
+
+          if (listState.type === 'tick') {
+            return (indent === 1 ? '  ' : '') + '✔ '
+          }
+
+          if (listState.type === 'cross') {
+            return (indent === 1 ? '  ' : '') + '✘ '
+          }
+
+          return ''
+        }
+
+        function getCaretOffsetInText (el) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection || selection.rangeCount === 0) return 0
+          var range = selection.getRangeAt(0)
+          var preRange = range.cloneRange()
+          preRange.selectNodeContents(el)
+          preRange.setEnd(range.startContainer, range.startOffset)
+          return preRange.toString().length
+        }
+
+        function setCaretOffsetInText (el, offset) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection) return
+
+          var range = document.createRange()
+          range.selectNodeContents(el)
+          range.collapse(true)
+
+          var currentOffset = 0
+          var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null)
+          var node
+          while ((node = walker.nextNode())) {
+            var len = node.nodeValue.length
+            if (currentOffset + len >= offset) {
+              range.setStart(node, Math.max(0, offset - currentOffset))
+              range.collapse(true)
+              selection.removeAllRanges()
+              selection.addRange(range)
+              return
+            }
+            currentOffset += len
+          }
+
+          selection.removeAllRanges()
+          selection.addRange(range)
+        }
+
+        function insertTextAtTextOffset (el, text, offset) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection) return
+
+          setCaretOffsetInText(el, offset)
+          insertTextAtCursor(text)
+        }
+
+        function getCurrentLineInfo () {
+          var text = considerationsEditor.innerText.replace(/\u00A0/g, ' ')
+          var caret = getCaretOffsetInText(considerationsEditor)
+          var lineStart = text.lastIndexOf('\n', Math.max(0, caret - 1)) + 1
+          var nextNewline = text.indexOf('\n', lineStart)
+          var lineEnd = nextNewline === -1 ? text.length : nextNewline
+          var lineText = text.slice(lineStart, lineEnd)
+          return { text: text, caret: caret, lineStart: lineStart, lineEnd: lineEnd, lineText: lineText }
+        }
+
+        function ensureNumberFromCurrentLine () {
+          var info = getCurrentLineInfo()
+          var match = info.lineText.match(/^\s*(\d+)\.\s/)
+          if (match) listState.number = parseInt(match[1], 10)
+        }
+
+        function stripExistingListPrefix (line) {
+          return String(line)
+            .replace(/^(\s*)(?:•|✔|✘)\s+/, '$1')
+            .replace(/^(\s*)\d+\.\s+/, '$1')
+        }
+
+        function applyListPrefixToCurrentLine () {
+          if (!listState.type) return false
+          var info = getCurrentLineInfo()
+
+          if (listState.type === 'numbered') {
+            ensureNumberFromCurrentLine()
+          }
+
+          var prefix = prefixForState()
+          if (!prefix) return false
+
+          var originalLine = info.lineText
+          var withoutPrefix = stripExistingListPrefix(originalLine)
+          var content = withoutPrefix.replace(/^\s+/, '')
+          var newLine = content === '' ? prefix : (prefix + content)
+
+          // If already the same prefix type and line starts with it, do nothing.
+          var alreadySame =
+            (listState.type === 'bullets' && originalLine.trimStart().startsWith('• ')) ||
+            (listState.type === 'tick' && originalLine.trimStart().startsWith('✔ ')) ||
+            (listState.type === 'cross' && originalLine.trimStart().startsWith('✘ ')) ||
+            (listState.type === 'numbered' && /^\s*\d+\.\s/.test(originalLine))
+          if (alreadySame) return false
+
+          var text = info.text
+          var updated = text.slice(0, info.lineStart) + newLine + text.slice(info.lineEnd)
+          considerationsEditor.innerText = updated
+
+          var caretInLine = info.caret - info.lineStart
+          var removed = originalLine.length - withoutPrefix.length
+          var nextCaretInLine = prefix.length + Math.max(0, caretInLine - removed)
+          var nextCaret = info.lineStart + Math.min(newLine.length, nextCaretInLine)
+          setCaretOffsetInText(considerationsEditor, nextCaret)
+          syncConsiderations()
+          return true
+        }
+
+        function insertTextAtCursor (text) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selection || selection.rangeCount === 0) {
+            considerationsEditor.appendChild(document.createTextNode(text))
+            return
+          }
+
+          var range = selection.getRangeAt(0)
+          range.deleteContents()
+          range.insertNode(document.createTextNode(text))
+          range.collapse(false)
+          selection.removeAllRanges()
+          selection.addRange(range)
+        }
+
+        function selectionIsWithinEditor (selection) {
+          if (!selection || selection.rangeCount === 0) return false
+          var range = selection.getRangeAt(0)
+          return considerationsEditor.contains(range.commonAncestorContainer)
+        }
+
+        function syncConsiderations () {
+          considerationsHidden.value = considerationsEditor.innerText.replace(/\u00A0/g, ' ')
+        }
+
+        function formatSelectedLines (prefix) {
+          var selection = window.getSelection && window.getSelection()
+          if (!selectionIsWithinEditor(selection)) return false
+          if (selection.isCollapsed) return false
+
+          var selectedText = selection.toString()
+          if (!selectedText) return false
+
+          var lines = selectedText.split(/\r?\n/)
+          var n = listState.type === 'numbered' ? listState.number : null
+          var formatted = lines
+            .map(function (line) {
+              var stripped = stripExistingListPrefix(line)
+              var trimmed = stripped.replace(/^\s+/, '')
+              if (trimmed === '') return ''
+              if (listState.type === 'numbered') {
+                var linePrefix = prefixForState(n)
+                n = n + 1
+                return linePrefix + trimmed
+              }
+              return prefix + trimmed
+            })
+            .join('\n')
+
+          insertTextAtCursor(formatted)
+          syncConsiderations()
+          return true
+        }
+
+        toolbar.addEventListener('click', function (e) {
+          var formatBtn = e.target && e.target.closest && e.target.closest('button[data-format]')
+          if (formatBtn && formatBtn.getAttribute('data-format') === 'bold') {
+            var selection = window.getSelection && window.getSelection()
+            if (selectionIsWithinEditor(selection)) {
+              considerationsEditor.focus()
+              document.execCommand('bold')
+              syncConsiderations()
+            }
+            return
+          }
+
+          var btn = e.target && e.target.closest && e.target.closest('button[data-list-type]')
+          if (!btn) return
+
+          // Focus first so selection/caret is available; prevents double insert via focus handler.
+          considerationsEditor.focus()
+          setActiveListType(btn.getAttribute('data-list-type'))
+          if (listState.type === 'numbered') {
+            ensureNumberFromCurrentLine()
+          }
+
+          var prefix = prefixForState()
+          if (prefix) {
+            var formatted = formatSelectedLines(prefix)
+            if (!formatted) applyListPrefixToCurrentLine()
+          }
+        })
+
+        considerationsEditor.addEventListener('input', syncConsiderations)
+
+        considerationsEditor.addEventListener('keydown', function (e) {
+          if (e.key === 'Tab') {
+            if (!listState.type) return
+            e.preventDefault()
+
+            var maxIndent = listState.type === 'bullets' ? 1 : 0
+            listState.indent = Math.min(listState.indent + 1, maxIndent)
+            return
+          }
+
+          if (e.key === 'Enter') {
+            if (!listState.type) return
+            e.preventDefault()
+            if (listState.type === 'numbered') {
+              listState.number = Math.max(1, listState.number + 1)
+              insertTextAtCursor('\n' + prefixForState(listState.number))
+            } else {
+              insertTextAtCursor('\n' + prefixForState())
+            }
+            syncConsiderations()
+            return
+          }
+        })
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault()
+
+          var optionName = (document.getElementById('optionName') && document.getElementById('optionName').value || '').trim()
+          var optionDescription = (document.getElementById('optionDescription') && document.getElementById('optionDescription').value || '').trim()
+          var shortlistedInput = form.querySelector('input[name="shortlisted"]:checked')
+          var shortlisted = (shortlistedInput && shortlistedInput.value || '').trim()
+          syncConsiderations()
+          var considerations = (considerationsHidden.value || '').trim()
+
+          var hasAnyValue = [optionName, optionDescription, shortlisted, considerations].some(function (v) { return v !== '' })
+          if (!hasAnyValue) return
+
+          var tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML =
+            '<td class="govuk-table__cell"><a class="govuk-link" href="#">' + escapeHtml(optionName) + '</a></td>' +
+            '<td class="govuk-table__cell">' + escapeHtml(optionDescription) + '</td>' +
+            '<td class="govuk-table__cell">' + escapeHtml(shortlisted) + '</td>' +
+            '<td class="govuk-table__cell" style="white-space: pre-wrap;">' + escapeHtml(considerations) + '</td>'
+
+          // If the table is currently showing the "empty" row, replace it.
+          if (tableBody.children.length === 1 && tableBody.children[0].innerText.trim() === '') {
+            tableBody.innerHTML = ''
+          }
+          tableBody.appendChild(tr)
+
+          form.reset()
+          clearActiveListType()
+          considerationsEditor.innerText = ''
+          syncConsiderations()
+          var nameInput = document.getElementById('optionName')
+          if (nameInput) nameInput.focus()
+        })
+
+        setPressedStyles()
+      })()
+    </script>
+  </div>
+</div>
+{% endblock %}

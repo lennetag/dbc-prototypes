@@ -1,19 +1,37 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="Prototypes for Funding Pathfinders" %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
+  <div class="govuk-grid-column-full">
 
     <h1 class="govuk-heading-xl">
-      {{ serviceName }}
+      Prototypes for Funding Pathfinders
     </h1>
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+    <p class="govuk-body">
+      This is for testing purposes and the content may change frequently.
+    </p>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Pattern under test</th>
+          <th scope="col" class="govuk-table__header">Links</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Get approval to spend</td>
+          <td class="govuk-table__cell">
+            <a class="govuk-link" href="/get-approval-to-spend">original</a><br>
+            <a class="govuk-link" href="/get-approval-to-spend-alternative-1">alternative 1</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
