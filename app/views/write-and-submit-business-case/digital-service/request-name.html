@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Name of the request" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a href="/write-and-submit-business-case/start-digital-service" class="govuk-back-link">Back</a>
+
+    <form method="post" action="/write-and-submit-business-case/digital-service/request-name" novalidate>
+      <div class="govuk-form-group">
+        <h1 class="govuk-heading-xl">Name of the request</h1>
+
+        <div class="govuk-hint" id="request-name-hint">
+          Use a short name that will help you and others find this request later.
+        </div>
+
+        <label class="govuk-label" for="requestName">
+          Request name
+        </label>
+        <input class="govuk-input" id="requestName" name="requestName" type="text" spellcheck="false" value="{{ data.requestName }}" aria-describedby="request-name-hint">
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Total nominal budget" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a href="/write-and-submit-business-case/digital-service/request-name" class="govuk-back-link">Back</a>
+
+    <form method="post" action="/write-and-submit-business-case/digital-service/total-nominal-budget" novalidate>
+      <div class="govuk-form-group">
+        <h1 class="govuk-heading-xl">Total nominal budget</h1>
+
+        <div class="govuk-hint" id="total-nominal-budget-hint">
+          This is the total budget you’re asking for in cash terms (not adjusted for inflation).
+        </div>
+
+        <div class="govuk-input__wrapper">
+          <div class="govuk-input__prefix" aria-hidden="true">£</div>
+          <input class="govuk-input govuk-input--width-10" id="totalNominalBudget" name="totalNominalBudget" type="text" inputmode="numeric" spellcheck="false" value="{{ data.totalNominalBudget }}" aria-describedby="total-nominal-budget-hint">
+        </div>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,60 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "How do you want to draft the business case" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a href="/e2e-journey" class="govuk-back-link">Back</a>
+
+    <form method="post" action="/write-and-submit-business-case/how-to-draft" novalidate>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="draft-method-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              How do you want to draft the business case?
+            </h1>
+          </legend>
+
+          <div id="draft-method-hint" class="govuk-hint">
+            Choose how you want to work. You can upload a document you have drafted offline, or draft in the digital service.
+          </div>
+
+          <p class="govuk-body">
+            If you want to collaborate offline, you can download a Word template in <a class="govuk-link" href="/templates-and-examples#business-case-template">templates and examples</a>.
+          </p>
+
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="draft-method-upload" name="draftBusinessCaseMethod" type="radio" value="upload" {{ "checked" if data.draftBusinessCaseMethod == "upload" }}>
+              <label class="govuk-label govuk-radios__label" for="draft-method-upload">
+                Upload a document
+              </label>
+              <div class="govuk-hint govuk-radios__hint">
+                Upload a Word or PDF version of your draft. We’ll use AI to extract content and pre-fill the digital sections.
+              </div>
+            </div>
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="draft-method-digital" name="draftBusinessCaseMethod" type="radio" value="digital" {{ "checked" if data.draftBusinessCaseMethod == "digital" }}>
+              <label class="govuk-label govuk-radios__label" for="draft-method-digital">
+                Use the digital service
+              </label>
+              <div class="govuk-hint govuk-radios__hint">
+                Answer guided questions and build your business case as you go.
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

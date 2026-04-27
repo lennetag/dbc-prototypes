@@ -1,0 +1,170 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Upload your business case document" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a href="/write-and-submit-business-case/how-to-draft" class="govuk-back-link">Back</a>
+
+    <h1 class="govuk-heading-xl">Upload your business case document</h1>
+
+    <p class="govuk-body">
+      Upload your draft business case to start. We’ll use AI to extract content and pre-fill sections for you to review.
+    </p>
+
+    <div class="govuk-inset-text">
+      This is a prototype screen. The upload does not store files and no AI is actually run.
+    </div>
+
+    <form method="post" action="/write-and-submit-business-case/upload-document" enctype="multipart/form-data" novalidate data-module="process-document">
+      <div class="govuk-form-group" id="upload-group">
+        <label class="govuk-label" for="business-case-file">
+          Upload a file
+        </label>
+        <div class="govuk-hint">
+          Accepted formats: Word (.doc, .docx) or PDF. Maximum file size: 50MB.
+        </div>
+        <input class="govuk-file-upload" id="business-case-file" name="businessCaseFile" type="file">
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button" id="process-document-button">
+        Process document
+      </button>
+    </form>
+
+    <div id="processing-panel" class="govuk-!-margin-top-6" hidden aria-live="polite">
+      <h2 class="govuk-heading-m">Processing your document</h2>
+      <div class="app-processing">
+        <div class="app-processing__spinner" aria-hidden="true"></div>
+        <p class="govuk-body app-processing__text">
+          Using AI to extract content and map it to the digital sections. This usually takes a few seconds.
+        </p>
+      </div>
+    </div>
+
+    <div id="results-panel" class="govuk-!-margin-top-6" hidden>
+      <h2 class="govuk-heading-l">What we found</h2>
+
+      <p class="govuk-body">
+        We’ve pre-filled <strong>8 of 10 sections</strong> (80%) from your document. Review the sections marked “Needs checking”
+        and add information to any marked “Needs more content”.
+      </p>
+
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Section status</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Section</th>
+            <th scope="col" class="govuk-table__header" style="width: 220px;">Status</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">0 - Funding Request Type</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">1 - Strategy, Problem Statement</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">2 - Options Analysis, Benefits</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">3 - Commercial Approach</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">4 - Financial Analysis and Accounting</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">5 - Priorities for Next Phase</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">6 - People, Departments and Governance</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">7 - Management and Delivery</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Auto-populated</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">8 - Compliance and Impact</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Needs checking</strong></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">9 - Transition to Live Services</td>
+            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Needs more content</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="govuk-button-group">
+        <a class="govuk-button" data-module="govuk-button" href="/write-and-submit-business-case/overview">
+          Go to case overview
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<style>
+  .app-processing {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .app-processing__spinner {
+    width: 40px;
+    height: 40px;
+    border: 6px solid #f3f2f1;
+    border-top-color: #1d70b8;
+    border-radius: 50%;
+    animation: app-spin 0.9s linear infinite;
+  }
+
+  @keyframes app-spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  (function () {
+    var form = document.querySelector('form[data-module="process-document"]')
+    if (!form) return
+
+    var fileInput = document.getElementById('business-case-file')
+    var button = document.getElementById('process-document-button')
+    var processingPanel = document.getElementById('processing-panel')
+    var resultsPanel = document.getElementById('results-panel')
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault()
+
+      if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        if (fileInput) fileInput.focus()
+        return
+      }
+
+      if (button) button.setAttribute('disabled', 'disabled')
+      if (processingPanel) processingPanel.hidden = false
+
+      window.setTimeout(function () {
+        if (processingPanel) processingPanel.hidden = true
+        if (resultsPanel) resultsPanel.hidden = false
+        if (button) button.removeAttribute('disabled')
+      }, 3000)
+    })
+  })()
+</script>
+{% endblock %}
+

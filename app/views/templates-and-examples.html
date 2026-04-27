@@ -1,0 +1,220 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Templates and guidance" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <a href="/e2e-journey" class="govuk-back-link">Back</a>
+
+    <h1 class="govuk-heading-xl">Templates and guidance</h1>
+
+    <p class="govuk-body">
+      Download templates and models, use Green Book–aligned digital guidance, and browse worked examples.
+    </p>
+
+    <p class="govuk-body">
+      <a class="govuk-button" role="button" draggable="false" href="#">
+        Tell us about content to add
+      </a>
+    </p>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">Contents</h2>
+
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#examples-theoretical">Examples (theoretical)</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#examples-written-by-departments">Examples (written by departments)</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#guidance">Guidance</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#templates">Templates</a>
+        </li>
+      </ul>
+
+      <div class="govuk-tabs__panel" id="examples-theoretical">
+        <h2 class="govuk-heading-m">Examples (theoretical)</h2>
+
+        <p class="govuk-body">
+          Use examples to understand what proportionate evidence looks like for different case types and delivery stages.
+          These are illustrative only.
+        </p>
+
+        <h3 class="govuk-heading-s">Centrally written (illustrative)</h3>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="#">Incremental cases: discovery example</a></li>
+          <li><a class="govuk-link" href="#">Incremental cases: alpha example</a></li>
+          <li><a class="govuk-link" href="#">Incremental cases: beta example</a></li>
+          <li><a class="govuk-link" href="#">Programme cases: example 1 (Department for Work and Pensions)</a></li>
+          <li><a class="govuk-link" href="#">Programme cases: example 2 (Home Office)</a></li>
+          <li><a class="govuk-link" href="#">Programme cases: example 3 (HM Revenue &amp; Customs)</a></li>
+          <li><a class="govuk-link" href="#">Live services: example 1 (Department for Education)</a></li>
+          <li>
+            (Published externally) <a class="govuk-link" href="#">Live services: example 2 (Department of Health and Social Care)</a>
+          </li>
+          <li><a class="govuk-link" href="#">Live services: example 3 (Ministry of Justice)</a></li>
+          <li><a class="govuk-link" href="#">Live services: example 4 (Department for Transport)</a></li>
+          <li><a class="govuk-link" href="#">Live services: example 5 (Department for Environment, Food &amp; Rural Affairs)</a></li>
+        </ul>
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="examples-written-by-departments">
+        <h2 class="govuk-heading-m">Examples (written by departments)</h2>
+
+        <p class="govuk-body">
+          A place for departments to share examples and supporting artefacts (for example option appraisal summaries, model
+          structures, and assurance packs).
+        </p>
+
+        <form class="govuk-form-group" method="get" action="/templates-and-examples#examples-written-by-departments">
+          <label class="govuk-label" for="ugc-search">
+            Search submitted examples
+          </label>
+          <div class="govuk-hint" id="ugc-search-hint">
+            For this prototype, try searching for “AI”.
+          </div>
+          <input class="govuk-input" id="ugc-search" name="q" type="search" value="{{ q | default('') }}" aria-describedby="ugc-search-hint">
+          <button class="govuk-button govuk-!-margin-top-2" type="submit">
+            Search
+          </button>
+        </form>
+
+        <div id="submitted-by-departments">
+          {% if showResults %}
+            <h3 class="govuk-heading-s">Search results{% if q %} for “{{ q }}”{% endif %}</h3>
+
+            {% if resultsCount > 0 %}
+              <p class="govuk-body">{{ resultsCount }} results</p>
+              <ul class="govuk-list">
+                {% for r in results %}
+                  <li class="govuk-!-margin-bottom-4">
+                    <a class="govuk-link govuk-!-font-weight-bold" href="#">{{ r.title }}</a><br>
+                    <span class="govuk-body-s govuk-!-margin-bottom-0">{{ r.department }}</span><br>
+                    <span class="govuk-body-s govuk-!-margin-bottom-0">{{ r.helpfulCount }} people found this helpful</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="govuk-body">No results found.</p>
+            {% endif %}
+          {% endif %}
+
+          <h3 class="govuk-heading-s">Latest submitted examples</h3>
+          <ul class="govuk-list">
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">AI triage assistant for contact centre demand (Discovery)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Department for Work and Pensions</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">128 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">Using AI to reduce fraud risk in online applications (Alpha)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">HM Revenue &amp; Customs</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">94 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">AI-assisted caseworker workflow (Beta)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Home Office</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">77 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">AI tool for document classification and redaction (Beta)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Ministry of Justice</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">63 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">AI summarisation in internal knowledge services (Live)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Department for Education</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">211 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              (Published externally) <a class="govuk-link govuk-!-font-weight-bold" href="#">AI for queue prediction and capacity planning (Live)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Department for Transport</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">52 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">Assuring AI-enabled decisions: governance and controls pack (Programme)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Department of Health and Social Care</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">39 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">Evaluating AI model performance and bias (Economic case appendix)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Department for Environment, Food &amp; Rural Affairs</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">86 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              <a class="govuk-link govuk-!-font-weight-bold" href="#">AI procurement approach for managed services (Commercial case)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Cabinet Office</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">41 people found this helpful</span>
+            </li>
+            <li class="govuk-!-margin-bottom-4">
+              (Published externally) <a class="govuk-link govuk-!-font-weight-bold" href="#">Measuring benefits from AI automation (Benefits realisation)</a><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">Department for Science, Innovation and Technology</span><br>
+              <span class="govuk-body-s govuk-!-margin-bottom-0">105 people found this helpful</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="guidance">
+        <h2 class="govuk-heading-m">Guidance</h2>
+
+        <p class="govuk-body">
+          Specialist guidance to support consistent, Green Book–aligned appraisal for digital investment.
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="#">Sensitivity analysis for digital projects</a></li>
+          <li><a class="govuk-link" href="#">Accounting treatment for cloud infrastructure</a></li>
+          <li><a class="govuk-link" href="#">Contingency for digital projects</a></li>
+          <li><a class="govuk-link" href="#">Optimism bias for digital projects</a></li>
+          <li><a class="govuk-link" href="#">Additional topics (for example discounting, risk, and proportionality)</a></li>
+        </ul>
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="templates">
+        <h2 class="govuk-heading-m">Templates</h2>
+
+        <p class="govuk-body">
+          Templates and models to support analysis, assurance and approvals.
+        </p>
+
+        <h3 class="govuk-heading-s" id="business-case-template">Business case templates</h3>
+        <p class="govuk-body">
+          You can complete these templates in Word and then upload them to populate the digital business case service.
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="#">Incremental business case template</a></li>
+          <li><a class="govuk-link" href="#">Portfolio business case template</a></li>
+          <li><a class="govuk-link" href="#">Live service business case template</a></li>
+        </ul>
+
+        <h3 class="govuk-heading-s">Models</h3>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="#">Commercial model</a></li>
+          <li><a class="govuk-link" href="#">Economic model</a></li>
+          <li><a class="govuk-link" href="#">Finance model</a></li>
+        </ul>
+
+        <h3 class="govuk-heading-s">Project delivery</h3>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="#">Project delivery template</a></li>
+        </ul>
+
+        <p class="govuk-body">
+          <a class="govuk-link" href="/assets/documents/digital-business-case-template.rtf" download>
+            Download Word template (RTF)
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
