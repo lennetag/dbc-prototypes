@@ -4,3 +4,54 @@
 // 
 
 // Add extra styles here
+
+// E2E journey hub — bordered tiles (grey header, white body)
+.app-dbc-tile {
+  border: 1px solid #b1b4b6;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.app-dbc-tile__header {
+  background: #f3f2f1;
+  padding: 15px 20px;
+}
+
+.app-dbc-tile__body {
+  background: #ffffff;
+  flex: 1 1 auto;
+  padding: 20px;
+}
+
+.app-filter-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.app-filter-layout__filter {
+  flex: 0 0 320px;
+  max-width: 360px;
+}
+
+.app-filter-layout__results {
+  flex: 1 1 480px;
+  min-width: 0;
+}
+
+.app-value-row {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.app-value-row__condition {
+  flex: 0 0 140px;
+}
+
+.app-value-row__amount {
+  flex: 1 1 200px;
+}

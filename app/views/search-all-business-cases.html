@@ -1,0 +1,373 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Search all business cases" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <a href="/" class="govuk-back-link">Back to prototypes</a>
+    <h1 class="govuk-heading-xl">Search all business cases</h1>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">
+        You can use filters to narrow down results, or try the <strong>AI-assisted search</strong> to describe what you’re looking for in natural language.
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        The AI-assisted search is a prototype feature and results may be incomplete or inaccurate.
+      </p>
+    </div>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">Search options</h2>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#filter-tab">Filter business cases</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#ai-tab">AI-assisted search</a>
+        </li>
+      </ul>
+
+      <div class="govuk-tabs__panel" id="filter-tab">
+        <div class="app-filter-layout">
+          <div class="app-filter-layout__filter">
+            <h2 class="govuk-heading-m">Filter business cases</h2>
+
+            <form id="filtersForm" class="govuk-!-margin-bottom-6">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="department">
+                  Department
+                </label>
+                <select class="govuk-select" id="department" name="department">
+                  <option selected value="dsit">Department for Science, Innovation and Technology (DSIT)</option>
+                  <option value="dft">Department for Transport (DfT)</option>
+                  <option value="defra">Department for Environment, Food & Rural Affairs (Defra)</option>
+                  <option value="home-office">Home Office</option>
+                  <option value="dhsc">Department of Health and Social Care (DHSC)</option>
+                </select>
+              </div>
+
+              <fieldset class="govuk-fieldset" aria-describedby="total-value-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  Total value
+                </legend>
+                <div id="total-value-hint" class="govuk-hint">
+                  Choose “above” or “below” and enter a total value in pounds.
+                </div>
+
+                <div class="govuk-form-group">
+                  <div class="app-value-row">
+                    <div class="app-value-row__condition">
+                      <label class="govuk-label" for="totalValueCondition">
+                        Condition
+                      </label>
+                      <select class="govuk-select" id="totalValueCondition" name="totalValueCondition">
+                        <option value="above">Above</option>
+                        <option value="below">Below</option>
+                      </select>
+                    </div>
+                    <div class="app-value-row__amount">
+                      <label class="govuk-label" for="totalValueAmount">
+                        Amount
+                      </label>
+                      <div class="govuk-input__wrapper">
+                        <div class="govuk-input__prefix" aria-hidden="true">£</div>
+                        <input class="govuk-input govuk-input--width-10" id="totalValueAmount" name="totalValueAmount" type="text" inputmode="numeric" spellcheck="false">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  Status
+                </legend>
+                <div class="govuk-checkboxes govuk-checkboxes--small">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="status-approved" name="status" type="checkbox" value="approved">
+                    <label class="govuk-label govuk-checkboxes__label" for="status-approved">Approved</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="status-draft" name="status" type="checkbox" value="draft">
+                    <label class="govuk-label govuk-checkboxes__label" for="status-draft">Draft</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="status-closed" name="status" type="checkbox" value="closed">
+                    <label class="govuk-label govuk-checkboxes__label" for="status-closed">Closed</label>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="govuk-fieldset govuk-!-margin-top-4">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  Type
+                </legend>
+                <div class="govuk-checkboxes govuk-checkboxes--small">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="type-incremental" name="type" type="checkbox" value="incremental">
+                    <label class="govuk-label govuk-checkboxes__label" for="type-incremental">Incremental</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="type-portfolio" name="type" type="checkbox" value="portfolio">
+                    <label class="govuk-label govuk-checkboxes__label" for="type-portfolio">Portfolio</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="type-live" name="type" type="checkbox" value="live">
+                    <label class="govuk-label govuk-checkboxes__label" for="type-live">Live</label>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="govuk-fieldset govuk-!-margin-top-4">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  Stage
+                </legend>
+                <div class="govuk-checkboxes govuk-checkboxes--small">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="stage-discovery" name="stage" type="checkbox" value="discovery">
+                    <label class="govuk-label govuk-checkboxes__label" for="stage-discovery">Discovery</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="stage-alpha" name="stage" type="checkbox" value="alpha">
+                    <label class="govuk-label govuk-checkboxes__label" for="stage-alpha">Alpha</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="stage-beta" name="stage" type="checkbox" value="beta">
+                    <label class="govuk-label govuk-checkboxes__label" for="stage-beta">Beta</label>
+                  </div>
+                </div>
+              </fieldset>
+
+              <button class="govuk-button govuk-!-margin-top-4" type="button" id="applyFiltersBtn" data-module="govuk-button">
+                Search
+              </button>
+              <p class="govuk-body govuk-!-margin-bottom-0">
+                <a class="govuk-link" href="#" id="clearFiltersLink">Clear filters</a>
+              </p>
+            </form>
+          </div>
+
+          <div class="app-filter-layout__results">
+            <div id="filterResultsPanel" class="govuk-!-display-none" aria-live="polite" tabindex="-1">
+              <div class="govuk-!-margin-bottom-4">
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Results</h3>
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                  <strong id="filterResultsCount">0</strong> results. Total funded: <strong id="filterTotalFunded">£0</strong>
+                </p>
+              </div>
+
+              <ol class="govuk-list govuk-list--number" id="filterResultsList"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="ai-tab">
+        <h2 class="govuk-heading-m">AI-assisted search</h2>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="aiQuery">
+            Search all business cases
+          </label>
+          <div id="aiQueryHint" class="govuk-hint">
+            Describe what you want to find (for example, outcomes, places, or timeframes). You can use full sentences.
+          </div>
+          <div class="govuk-input__wrapper">
+            <input class="govuk-input" id="aiQuery" name="aiQuery" type="text" aria-describedby="aiQueryHint" autocomplete="off">
+            <button class="govuk-button govuk-!-margin-bottom-0" type="button" id="aiSearchBtn" data-module="govuk-button">
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div id="aiResultsPanel" class="govuk-!-display-none" aria-live="polite" tabindex="-1">
+          <div class="govuk-!-margin-bottom-4">
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Results</h3>
+            <p class="govuk-body govuk-!-margin-bottom-0">
+              <strong id="aiResultsCount">0</strong> results. Total funded: <strong id="aiTotalFunded">£0</strong>
+            </p>
+          </div>
+
+          <ol class="govuk-list govuk-list--number" id="aiResultsList"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const EXAMPLE_QUERY = 'Summaries all projects that will help improve air quality in metro cities by 2030'
+
+    const MOCK_RESULTS = [
+      {
+        title: 'Clean Air Data Platform for Metro Areas',
+        department: 'Department for Science, Innovation and Technology (DSIT)',
+        status: 'Approved',
+        type: 'Portfolio',
+        stage: 'Beta',
+        totalValue: 18000000
+      },
+      {
+        title: 'Urban Air Quality Forecasting Service',
+        department: 'Department for Science, Innovation and Technology (DSIT)',
+        status: 'Draft',
+        type: 'Incremental',
+        stage: 'Alpha',
+        totalValue: 6200000
+      },
+      {
+        title: 'Real-time emissions insights for city logistics',
+        department: 'Department for Science, Innovation and Technology (DSIT)',
+        status: 'Approved',
+        type: 'Live',
+        stage: 'Beta',
+        totalValue: 9400000
+      },
+      {
+        title: 'Clean air compliance tooling for local authorities',
+        department: 'Department for Science, Innovation and Technology (DSIT)',
+        status: 'Closed',
+        type: 'Incremental',
+        stage: 'Discovery',
+        totalValue: 3100000
+      },
+      {
+        title: 'Metro active travel impact analytics',
+        department: 'Department for Science, Innovation and Technology (DSIT)',
+        status: 'Approved',
+        type: 'Portfolio',
+        stage: 'Discovery',
+        totalValue: 7700000
+      }
+    ]
+
+    function formatCurrencyGBP (value) {
+      try {
+        return new Intl.NumberFormat('en-GB', {
+          style: 'currency',
+          currency: 'GBP',
+          maximumFractionDigits: 0
+        }).format(value)
+      } catch (e) {
+        return '£' + Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+    }
+
+    function escapeHtml (unsafe) {
+      return String(unsafe)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+    }
+
+    function getCheckedValues (name) {
+      return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(el => el.value)
+    }
+
+    function applyClientFilters (results) {
+      const departmentValue = document.getElementById('department').value
+      const statusValues = getCheckedValues('status')
+      const typeValues = getCheckedValues('type')
+      const stageValues = getCheckedValues('stage')
+
+      const condition = document.getElementById('totalValueCondition').value
+      const amountRaw = document.getElementById('totalValueAmount').value.trim().replace(/[, ]/g, '')
+      const amount = amountRaw ? Number(amountRaw) : null
+
+      const departmentMap = {
+        dsit: 'Department for Science, Innovation and Technology (DSIT)',
+        dft: 'Department for Transport (DfT)',
+        defra: 'Department for Environment, Food & Rural Affairs (Defra)',
+        'home-office': 'Home Office',
+        dhsc: 'Department of Health and Social Care (DHSC)'
+      }
+      const departmentLabel = departmentMap[departmentValue]
+
+      return results.filter(r => {
+        if (departmentLabel && r.department !== departmentLabel) return false
+        if (statusValues.length && !statusValues.includes(r.status.toLowerCase())) return false
+        if (typeValues.length && !typeValues.includes(r.type.toLowerCase())) return false
+        if (stageValues.length && !stageValues.includes(r.stage.toLowerCase())) return false
+
+        if (amount !== null && !Number.isNaN(amount)) {
+          if (condition === 'above' && !(r.totalValue > amount)) return false
+          if (condition === 'below' && !(r.totalValue < amount)) return false
+        }
+
+        return true
+      })
+    }
+
+    function renderResults (results, ids) {
+      const panel = document.getElementById(ids.panel)
+      const list = document.getElementById(ids.list)
+      const countEl = document.getElementById(ids.count)
+      const totalEl = document.getElementById(ids.total)
+
+      const total = results.reduce((sum, r) => sum + (r.totalValue || 0), 0)
+      countEl.textContent = String(results.length)
+      totalEl.textContent = formatCurrencyGBP(total)
+
+      list.innerHTML = results.map(r => {
+        return (
+          '<li class="govuk-!-margin-bottom-4">' +
+            '<a class="govuk-link" href="#">' + escapeHtml(r.title) + '</a>' +
+            '<p class="govuk-body govuk-!-margin-top-1 govuk-!-margin-bottom-0">' +
+              escapeHtml(r.department) +
+            '</p>' +
+            '<p class="govuk-body govuk-!-margin-top-1 govuk-!-margin-bottom-0">' +
+              '<strong>Status:</strong> ' + escapeHtml(r.status) + ' &nbsp; ' +
+              '<strong>Type:</strong> ' + escapeHtml(r.type) + ' &nbsp; ' +
+              '<strong>Stage:</strong> ' + escapeHtml(r.stage) +
+            '</p>' +
+            '<p class="govuk-body govuk-!-margin-top-1 govuk-!-margin-bottom-0">' +
+              '<strong>Total value:</strong> ' + escapeHtml(formatCurrencyGBP(r.totalValue)) +
+            '</p>' +
+          '</li>'
+        )
+      }).join('')
+
+      panel.classList.remove('govuk-!-display-none')
+      panel.focus && panel.focus()
+    }
+
+    function runAiSearch () {
+      const input = document.getElementById('aiQuery')
+      input.value = EXAMPLE_QUERY
+
+      const filtered = applyClientFilters(MOCK_RESULTS)
+      renderResults(filtered, {
+        panel: 'aiResultsPanel',
+        list: 'aiResultsList',
+        count: 'aiResultsCount',
+        total: 'aiTotalFunded'
+      })
+    }
+
+    document.getElementById('aiSearchBtn').addEventListener('click', function () {
+      runAiSearch()
+    })
+
+    document.getElementById('applyFiltersBtn').addEventListener('click', function () {
+      const filtered = applyClientFilters(MOCK_RESULTS)
+      renderResults(filtered, {
+        panel: 'filterResultsPanel',
+        list: 'filterResultsList',
+        count: 'filterResultsCount',
+        total: 'filterTotalFunded'
+      })
+    })
+
+    document.getElementById('clearFiltersLink').addEventListener('click', function (e) {
+      e.preventDefault()
+      document.getElementById('filtersForm').reset()
+    })
+  })()
+</script>
+{% endblock %}
+
