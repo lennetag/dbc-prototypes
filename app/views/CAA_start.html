@@ -1,0 +1,54 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Operational authorisation" %}
+{% set serviceName = "Civil Aviation Authority" %}
+
+{# No service URL — service name is plain text, not linked #}
+{% set serviceUrl = "" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Apply for permission to fly an unmanned aircraft in complex or higher-risk situations
+    </h1>
+
+    <p class="govuk-body-l">
+      Use this service to carry out a safety assessment and apply for an Operational Authorisation from the Civil Aviation Authority (CAA).
+    </p>
+
+    <h2 class="govuk-heading-m">Who this is for</h2>
+    <p class="govuk-body">
+      This service is for drone operators who want to fly in situations that go beyond the basic rules — for example, flying beyond visual line of sight, over people, or in busier airspace. If your operation cannot use a simpler pre-approved route, you will need to complete a risk assessment and submit it to the CAA for approval.
+    </p>
+
+    <h2 class="govuk-heading-m">What the assessment involves</h2>
+    <p class="govuk-body">
+      The CAA needs to understand how risky your proposed operation is before it can authorise it. This service guides you through a structured process to work that out.
+    </p>
+    <p class="govuk-body">
+      The assessment looks at two types of risk separately, then combines them into a single score.
+    </p>
+
+    <h3 class="govuk-heading-s">Risk to people on the ground</h3>
+    <p class="govuk-body">
+      The first part asks about the risk of your drone falling and injuring someone below. This depends on three things: how big and fast your drone is, how many people are likely to be underneath it, and what practical steps you can take to reduce that risk — for example, flying over an area you can close to the public, or using a parachute system.
+    </p>
+
+    <h3 class="govuk-heading-s">Risk of a collision in the air</h3>
+    <p class="govuk-body">
+      The second part asks about the risk of your drone colliding with a manned aircraft. This depends on what type of airspace you will be flying in, how much other air traffic uses it, and what steps you will take to reduce the chance of an encounter — for example, staying below a certain altitude or using equipment that makes your drone visible to other aircraft.
+    </p>
+
+    <h2 class="govuk-heading-m">How your risk score is calculated</h2>
+    <p class="govuk-body">
+      For each type of risk, the assessment first establishes the worst-case starting position — the risk if you did nothing to reduce it. It then asks what practical measures you will put in place, and recalculates the risk to reflect those.
+    </p>
+    <p class="govuk-body">
+      The two resulting scores are combined to produce an overall risk rating. That rating determines how much safety evidence you need to provide to the CAA with your application. A lower score means a shorter, simpler evidence list. A higher score means more detailed documentation and, in some cases, independent verification of your safety measures.
+    </p>
+  </div>
+</div>
+
+{% endblock %}
