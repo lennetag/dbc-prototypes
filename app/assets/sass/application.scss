@@ -55,3 +55,293 @@
 .app-value-row__amount {
   flex: 1 1 200px;
 }
+
+// CAA start — left-edge-only strip (inset-style), brand blue
+.app-caa-risk-callout {
+  margin-bottom: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  border-left: 10px solid #1d70b8;
+  color: #0b0c0c;
+}
+
+// CAA application — full-width grey calculator band (distinct from narrow content column below)
+.app-caa-sail-panel {
+  background-color: #f3f2f1;
+  padding: 18px;
+  margin-bottom: 0;
+  border-top: 1px solid #b1b4b6;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+@media (min-width: 40.0625em) {
+  .app-caa-sail-panel {
+    padding: 22px 24px;
+  }
+}
+
+.app-caa-sail-panel__title {
+  letter-spacing: 0.02em;
+}
+
+.app-caa-sail-panel__intro {
+  color: #505a5f;
+  max-width: 48em;
+}
+
+.app-caa-sail-panel__divider {
+  height: 1px;
+  background: #b1b4b6;
+  margin: 16px 0;
+}
+
+.app-caa-sail-panel__row {
+  margin-top: 5px;
+}
+
+.app-caa-sail-panel__inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 0;
+}
+
+@media (max-width: 40.0525em) {
+  .app-caa-sail-panel__inputs .app-caa-sail-panel__input-block:not(:last-child) {
+    padding-bottom: 14px;
+    border-bottom: 1px solid #d0d3d6;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .app-caa-sail-panel__inputs {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 16px 20px;
+    align-items: start;
+  }
+
+  .app-caa-sail-panel__inputs .app-caa-sail-panel__input-block {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.app-caa-sail-panel__datum {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #0b0c0c;
+}
+
+.app-caa-sail-panel__outcome {
+  margin-top: 20px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px dashed #939598;
+}
+
+.app-caa-sail-panel__outcome-heading {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.app-caa-sail-panel__output {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #0b0c0c;
+}
+
+.app-caa-ai-trigger .app-caa-ai-trigger__toggle {
+  margin-bottom: 0;
+}
+
+.app-caa-ai-panel {
+  margin-top: govuk-spacing(4);
+  padding: govuk-spacing(4);
+  background: #f8f8f8;
+  border: 1px solid #b1b4b6;
+}
+
+.app-caa-ai-panel .app-caa-ai-panel__composer {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: govuk-spacing(2);
+}
+
+.app-caa-ai-panel .app-caa-ai-panel__composer-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.app-caa-ai-panel .app-caa-ai-panel__composer-cta {
+  flex-shrink: 0;
+  margin-bottom: 0;
+  align-self: flex-end;
+}
+
+.app-caa-ai-panel__response {
+  min-height: 8rem;
+  padding: govuk-spacing(3);
+  background: #ffffff;
+  border: 1px solid #b1b4b6;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.app-caa-ai-panel__response .app-caa-ai-panel__stream-target {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.app-caa-ai-panel__response.is-busy .app-caa-ai-panel__caret {
+  opacity: 1;
+}
+
+.app-caa-ai-panel__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: #0b0c0c;
+  opacity: 0;
+  animation: app-caa-ai-caret 0.95s ease-in-out infinite;
+}
+
+@keyframes app-caa-ai-caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+.app-caa-sail-panel__scope-msg:not([hidden]) {
+  padding-top: 8px;
+  border-top: 2px solid #d4351c;
+  color: #b10e1e;
+  font-weight: 700;
+}
+
+.app-caa-sail-panel__osos .govuk-accordion {
+  border-bottom: 0;
+}
+
+/* Single section only — hide GOV.UK injected “Show all sections / Hide all sections” control */
+.app-caa-sail-panel__osos .govuk-accordion__controls {
+  display: none;
+}
+
+/* Match “Outcome” (govuk-heading-s, 19px desktop) — accordion button otherwise stays body-sized */
+.app-caa-sail-panel__osos .govuk-accordion__section-heading.govuk-heading-s .govuk-accordion__section-button {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+/* Tighter accordion titles: remove GOV.UK collapsed-state transparent border + extra padding beneath headers */
+.govuk-frontend-supported .app-caa-sail-panel__osos .govuk-accordion__section-button {
+  padding-top: govuk-spacing(1);
+  padding-bottom: 0;
+  border-bottom: 0;
+
+  @media #{govuk-from-breakpoint(tablet)} {
+    padding-bottom: 0;
+  }
+}
+
+.govuk-frontend-supported .app-caa-sail-panel__osos .govuk-accordion__section--expanded .govuk-accordion__section-button {
+  padding-bottom: govuk-spacing(2);
+
+  @media #{govuk-from-breakpoint(tablet)} {
+    padding-bottom: govuk-spacing(2);
+  }
+}
+
+.govuk-frontend-supported .app-caa-sail-panel__osos .govuk-accordion__section--expanded .govuk-accordion__section-content {
+  padding-top: govuk-spacing(2);
+}
+
+/* JS wraps title text in this node; default 13px margin-bottom adds a gap under titles */
+.govuk-frontend-supported .app-caa-sail-panel__osos .govuk-accordion__section-heading-text {
+  margin-bottom: 0;
+}
+
+.app-caa-sail-matrix__table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-caa-sail-matrix__grc-head {
+  min-width: 4.5rem;
+}
+
+.app-caa-sail-matrix th,
+.app-caa-sail-matrix td {
+  text-align: center;
+}
+
+// Matrix accordion: highlight cells matching live intrinsic / final SAIL lookup
+.app-caa-sail-matrix tbody td.app-caa-sail-matrix__cell--intrinsic {
+  background-color: #cecece;
+  color: #0b0c0c;
+}
+
+.app-caa-sail-matrix tbody td.app-caa-sail-matrix__cell--final {
+  background-color: #1d70b8;
+  color: #ffffff;
+}
+
+.app-caa-sail-matrix tbody td.app-caa-sail-matrix__cell--intrinsic.app-caa-sail-matrix__cell--final {
+  background-color: #1d70b8;
+  color: #ffffff;
+}
+
+// Sections — looser layout / step label (intentionally off-pattern for workshop discussion)
+.app-caa-flow-section__label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 10px;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #0b0c0c;
+}
+
+@media (min-width: 40.0625em) {
+  .app-caa-flow-section__label {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 16px;
+  }
+}
+
+.app-caa-flow-section__step {
+  display: inline-block;
+  min-width: 2.2ch;
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 400;
+  color: #b1b4b6;
+  letter-spacing: -0.04em;
+}
+
+.app-caa-flow-section--muted {
+  padding: 18px 16px 18px 18px;
+  border-left: 6px solid #505a5f;
+  background: #fafafa;
+}
+
+.app-caa-flow-section--muted .govuk-heading-m {
+  margin-top: 0;
+}

@@ -28,18 +28,22 @@
       The CAA needs to understand how risky your proposed operation is before it can authorise it. This service guides you through a structured process to work that out.
     </p>
     <p class="govuk-body">
-      The assessment looks at two types of risk separately, then combines them into a single score.
+      The assessment looks at two types of risk separately, then combines them into a single score referred to as SAIL (Specific Assurance and Integrity Level).
     </p>
 
-    <h3 class="govuk-heading-s">Risk to people on the ground</h3>
-    <p class="govuk-body">
-      The first part asks about the risk of your drone falling and injuring someone below. This depends on three things: how big and fast your drone is, how many people are likely to be underneath it, and what practical steps you can take to reduce that risk — for example, flying over an area you can close to the public, or using a parachute system.
-    </p>
+    <div class="app-caa-risk-callout">
+      <h3 class="govuk-heading-s govuk-!-margin-top-0">1. Risk to people on the ground (GRC)</h3>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        The first part asks about the risk of your drone falling and injuring someone below. This depends on three things: how big and fast your drone is, how many people are likely to be underneath it, and what practical steps you can take to reduce that risk — for example, flying over an area you can close to the public, or using a parachute system.
+      </p>
+    </div>
 
-    <h3 class="govuk-heading-s">Risk of a collision in the air</h3>
-    <p class="govuk-body">
-      The second part asks about the risk of your drone colliding with a manned aircraft. This depends on what type of airspace you will be flying in, how much other air traffic uses it, and what steps you will take to reduce the chance of an encounter — for example, staying below a certain altitude or using equipment that makes your drone visible to other aircraft.
-    </p>
+    <div class="app-caa-risk-callout">
+      <h3 class="govuk-heading-s govuk-!-margin-top-0">2. Risk of a collision in the air (ARC)</h3>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        The second part asks about the risk of your drone colliding with a manned aircraft. This depends on what type of airspace you will be flying in, how much other air traffic uses it, and what steps you will take to reduce the chance of an encounter — for example, staying below a certain altitude or using equipment that makes your drone visible to other aircraft.
+      </p>
+    </div>
 
     <h2 class="govuk-heading-m">How your risk score is calculated</h2>
     <p class="govuk-body">
@@ -48,6 +52,63 @@
     <p class="govuk-body">
       The two resulting scores are combined to produce an overall risk rating. That rating determines how much safety evidence you need to provide to the CAA with your application. A lower score means a shorter, simpler evidence list. A higher score means more detailed documentation and, in some cases, independent verification of your safety measures.
     </p>
+
+    <table class="govuk-table govuk-!-margin-top-6">
+      <caption class="govuk-table__caption govuk-table__caption--m">Ground Risk Class (GRC) by Air Risk Class (ARC) and Specific Assurance and Integrity Level (SAIL)</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Ground risk</span></th>
+          <th scope="col" class="govuk-table__header">ARC-a</th>
+          <th scope="col" class="govuk-table__header">ARC-b</th>
+          <th scope="col" class="govuk-table__header">ARC-c</th>
+          <th scope="col" class="govuk-table__header">ARC-d</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">GRC 1–2</th>
+          <td class="govuk-table__cell">SAIL I</td>
+          <td class="govuk-table__cell">SAIL II</td>
+          <td class="govuk-table__cell">SAIL III</td>
+          <td class="govuk-table__cell">SAIL IV</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">GRC 3–4</th>
+          <td class="govuk-table__cell">SAIL II</td>
+          <td class="govuk-table__cell">SAIL III</td>
+          <td class="govuk-table__cell">SAIL III</td>
+          <td class="govuk-table__cell">SAIL V</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">GRC 5</th>
+          <td class="govuk-table__cell">SAIL III</td>
+          <td class="govuk-table__cell">SAIL III</td>
+          <td class="govuk-table__cell">SAIL IV</td>
+          <td class="govuk-table__cell">SAIL V</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">GRC 6</th>
+          <td class="govuk-table__cell">SAIL IV</td>
+          <td class="govuk-table__cell">SAIL IV</td>
+          <td class="govuk-table__cell">SAIL IV</td>
+          <td class="govuk-table__cell">SAIL VI</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">GRC 7</th>
+          <td class="govuk-table__cell">SAIL V</td>
+          <td class="govuk-table__cell">SAIL V</td>
+          <td class="govuk-table__cell">SAIL V</td>
+          <td class="govuk-table__cell">SAIL VI</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a href="/CAA_application" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-7" data-module="govuk-button">
+      Start
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+      </svg>
+    </a>
   </div>
 </div>
 

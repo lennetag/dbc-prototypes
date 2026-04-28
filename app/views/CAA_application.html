@@ -1,0 +1,418 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check the risk level of your drone operation" %}
+{% set serviceName = "Civil Aviation Authority" %}
+
+{% set serviceUrl = "" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      Check the risk level of your drone operation
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="app-caa-sail-panel">
+
+      <div class="app-caa-sail-panel__inputs">
+        <div class="app-caa-sail-panel__input-block">
+          <p class="govuk-body govuk-!-margin-bottom-1">Intrinsic GRC</p>
+          <p class="app-caa-sail-panel__datum" id="caa-calculator-initial-grc">—</p>
+        </div>
+        <div class="app-caa-sail-panel__input-block">
+          <p class="govuk-body govuk-!-margin-bottom-1">Final GRC (mitigated)</p>
+          <p class="app-caa-sail-panel__datum" id="caa-calculator-final-grc">—</p>
+        </div>
+        <div class="app-caa-sail-panel__input-block">
+          <p class="govuk-body govuk-!-margin-bottom-1">Intrinsic ARC</p>
+          <p class="app-caa-sail-panel__datum" id="caa-calculator-intrinsic-arc">—</p>
+        </div>
+        <div class="app-caa-sail-panel__input-block">
+          <p class="govuk-body govuk-!-margin-bottom-1">Final ARC (mitigated)</p>
+          <p class="app-caa-sail-panel__datum" id="caa-calculator-final-arc">—</p>
+        </div>
+      </div>
+
+      <div class="app-caa-sail-panel__outcome">
+        <h3 class="govuk-heading-s app-caa-sail-panel__outcome-heading">Outcome</h3>
+        <div class="govuk-grid-row app-caa-sail-panel__row">
+          <div class="govuk-grid-column-one-third-from-desktop">
+            <div class="govuk-form-group govuk-!-margin-bottom-0">
+              <p class="govuk-body govuk-!-margin-bottom-1">CAA application fee</p>
+              <p class="app-caa-sail-panel__output" id="caa-calculator-fee">£13,840</p>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-third-from-desktop">
+            <div class="govuk-form-group govuk-!-margin-bottom-0">
+              <p class="govuk-body govuk-!-margin-bottom-1">Intrinsic SAIL</p>
+              <p class="app-caa-sail-panel__output" id="caa-calculator-intrinsic-sail">—</p>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-third-from-desktop">
+            <div class="govuk-form-group govuk-!-margin-bottom-0">
+              <p class="govuk-body govuk-!-margin-bottom-1">Final SAIL (mitigated)</p>
+              <p class="app-caa-sail-panel__output" id="caa-calculator-sail">—</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="caa-osos-accordion-wrap" class="app-caa-sail-panel__osos govuk-!-margin-top-4">
+          <div class="govuk-accordion govuk-!-margin-bottom-2" data-module="govuk-accordion" id="accordion-sail-matrix">
+            <div class="govuk-accordion__section">
+              <div class="govuk-accordion__section-header">
+                <h4 class="govuk-accordion__section-heading govuk-heading-s">
+                  <span class="govuk-accordion__section-button" id="accordion-sail-matrix-heading-1">
+                    How SAIL scores are calculated
+                  </span>
+                </h4>
+              </div>
+              <div id="accordion-sail-matrix-content-1" class="govuk-accordion__section-content">
+                <div class="app-caa-sail-matrix__table-scroll">
+                  <table class="govuk-table app-caa-sail-matrix govuk-!-margin-bottom-3">
+                    <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">
+                      GRC bands and ARC columns mapping to estimated SAIL
+                    </caption>
+                    <thead class="govuk-table__head">
+                      <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header app-caa-sail-matrix__grc-head"><span class="govuk-visually-hidden">GRC</span></th>
+                        <th scope="col" class="govuk-table__header">ARC-a</th>
+                        <th scope="col" class="govuk-table__header">ARC-b</th>
+                        <th scope="col" class="govuk-table__header">ARC-c</th>
+                        <th scope="col" class="govuk-table__header">ARC-d</th>
+                      </tr>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">GRC 1–2</th>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL I">SAIL&nbsp;I</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL II">SAIL&nbsp;II</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL III">SAIL&nbsp;III</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL IV">SAIL&nbsp;IV</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">GRC 3–4</th>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL II">SAIL&nbsp;II</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL III">SAIL&nbsp;III</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL III">SAIL&nbsp;III</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL V">SAIL&nbsp;V</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">GRC 5</th>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL III">SAIL&nbsp;III</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL III">SAIL&nbsp;III</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL IV">SAIL&nbsp;IV</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL V">SAIL&nbsp;V</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">GRC 6</th>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL IV">SAIL&nbsp;IV</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL IV">SAIL&nbsp;IV</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL IV">SAIL&nbsp;IV</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL VI">SAIL&nbsp;VI</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">GRC 7</th>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL V">SAIL&nbsp;V</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL V">SAIL&nbsp;V</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL V">SAIL&nbsp;V</td>
+                        <td class="govuk-table__cell govuk-body-s" data-app-sail-base="SAIL VI">SAIL&nbsp;VI</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="govuk-accordion govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-default-osos">
+            <div class="govuk-accordion__section">
+              <div class="govuk-accordion__section-header">
+                <h4 class="govuk-accordion__section-heading govuk-heading-s">
+                  <span class="govuk-accordion__section-button" id="accordion-default-osos-heading-1">
+                    <span id="caa-calculator-osos-heading-label">See Operational Safety Objectives (OSOs)</span>
+                  </span>
+                </h4>
+              </div>
+              <div id="accordion-default-osos-content-1" class="govuk-accordion__section-content">
+                <p class="govuk-body-s govuk-!-margin-bottom-3">
+                  OSOs required at your estimated SAIL (Table 11 — AMC1 Article 11, UK SORA). “NR” means not required at that SAIL; otherwise L/M/H is the robustness to demonstrate.
+                </p>
+                <ul class="govuk-list govuk-list--bullet" id="caa-calculator-osos-list">
+                  <li class="govuk-body-s govuk-!-margin-bottom-0">Select inputs to see applicable OSOs.</li>
+                </ul>
+                <p class="govuk-body-s govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+                  <span class="govuk-visually-hidden">Source publications: </span>
+                  AMC1 Article 11 (UK SORA) and CAP 3017 (<a class="govuk-link govuk-link--no-visited-state" href="https://www.caa.co.uk/our-work/publications/content/uk-specific-operations-risk-assessment-uk-sora-methodology/" target="_blank" rel="noopener noreferrer">CAP 3017 UK SORA methodology</a>). Regulation text in the <a class="govuk-link govuk-link--no-visited-state" href="https://regulatorylibrary.caa.co.uk/2019-947/Content/Article%2011/AMC1%20Article%2011%20Conducting%20a%20UK%20Specific%20Operation%20Risk%20Assessment%20(UK%20SORA).htm" target="_blank" rel="noopener noreferrer">CAA regulatory library</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p id="caa-calculator-scope-message" class="govuk-body app-caa-sail-panel__scope-msg govuk-!-margin-top-6 govuk-!-margin-bottom-0" hidden aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="app-caa-ai-trigger govuk-!-margin-top-6">
+      <button type="button"
+        class="govuk-button govuk-button--secondary app-caa-ai-trigger__toggle"
+        id="caa-ai-toggle"
+        aria-expanded="false"
+        aria-controls="caa-ai-panel">
+        Ask a question (AI-assistant)
+      </button>
+      <div id="caa-ai-panel" class="app-caa-ai-panel" hidden>
+        <div class="app-caa-ai-panel__guidance">
+          <p class="govuk-body-s govuk-!-margin-bottom-3">
+            This assistant is limited to answering from CAA approved guidance documents (CAP 3017 UK SORA methodology, AMC1 Article 11, and related CAA publications). Always check the authoritative sources—you are responsible for compliance.
+          </p>
+          <!-- <ul class="govuk-list govuk-list--bullet govuk-body-s govuk-!-margin-bottom-0">
+            <li>
+              CAP 3017 — <a class="govuk-link govuk-link--no-visited-state" href="https://www.caa.co.uk/our-work/publications/content/uk-specific-operations-risk-assessment-uk-sora-methodology/" target="_blank" rel="noopener noreferrer">UK SORA methodology publication (opens in new tab)</a>
+            </li>
+            <li>
+              Regulatory library — <a class="govuk-link govuk-link--no-visited-state" href="https://regulatorylibrary.caa.co.uk/2019-947/Content/Article%2011/AMC1%20Article%2011%20Conducting%20a%20UK%20Specific%20Operation%20Risk%20Assessment%20(UK%20SORA).htm" target="_blank" rel="noopener noreferrer">AMC1 Article 11 (opens in new tab)</a>
+            </li>
+            <li>
+              CAA — <a class="govuk-link govuk-link--no-visited-state" href="https://www.caa.co.uk/drones/specific-category/uk-sora-based-operational-authorisations/" target="_blank" rel="noopener noreferrer">UK SORA Operational Authorisations (opens in new tab)</a>
+            </li>
+          </ul> -->
+        </div>
+        <div class="govuk-form-group govuk-!-margin-bottom-0">
+          <label class="govuk-label govuk-visually-hidden" for="caa-ai-input">Your question for the assistant</label>
+          <div id="caa-ai-input-hint" class="govuk-hint govuk-!-margin-bottom-3">
+            For example: When is a second assessment required?
+          </div>
+          <div class="app-caa-ai-panel__composer">
+            <input class="govuk-input app-caa-ai-panel__composer-input"
+              id="caa-ai-input"
+              name="caa-ai-query"
+              type="text"
+              autocomplete="off"
+              aria-describedby="caa-ai-input-hint"
+              maxlength="400">
+            <button type="button" class="govuk-button app-caa-ai-panel__composer-cta" id="caa-ai-submit">
+              Ask
+            </button>
+          </div>
+        </div>
+        <div class="app-caa-ai-panel__response-wrap govuk-!-margin-top-4">
+          <span id="caa-ai-response-status" class="govuk-visually-hidden" aria-live="polite" aria-relevant="additions"></span>
+          <div id="caa-ai-response" class="app-caa-ai-panel__response" tabindex="-1" role="region" aria-label="Assistant reply"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form id="caa-sail-form" action="#" method="post" novalidate>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-8">Section 1: Ground risk inputs</h2>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-8">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Max dimension <span class="govuk-visually-hidden">longest nominal dimension</span>
+          </legend>
+          <div class="govuk-hint govuk-!-margin-bottom-3">
+            Longest nominal dimension across the unmanned aircraft in operation.
+          </div>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-dimension-1m" name="ground-dimension" type="radio" value="under1m">
+              <label class="govuk-label govuk-radios__label" for="ground-dimension-1m">Under 1m</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-dimension-3m" name="ground-dimension" type="radio" value="under3m">
+              <label class="govuk-label govuk-radios__label" for="ground-dimension-3m">Under 3m</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-dimension-8m" name="ground-dimension" type="radio" value="under8m" checked>
+              <label class="govuk-label govuk-radios__label" for="ground-dimension-8m">Under 8m</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-dimension-20m" name="ground-dimension" type="radio" value="under20m">
+              <label class="govuk-label govuk-radios__label" for="ground-dimension-20m">Under 20m</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-8">
+        <fieldset class="govuk-fieldset" aria-describedby="ground-max-speed-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Maximum ground speed
+          </legend>
+          <div id="ground-max-speed-hint" class="govuk-hint govuk-!-margin-bottom-3">
+            These bands use metres per second. If your maximum speed is in miles per hour or kilometres per hour, you can
+            <a class="govuk-link govuk-link--no-visited-state" href="https://www.omnicalculator.com/conversion/speed-converter" target="_blank" rel="noopener noreferrer">use a speed calculator (opens in new window)</a>
+            to convert it.
+          </div>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-max-speed-25" name="ground-max-speed" type="radio" value="below25ms">
+              <label class="govuk-label govuk-radios__label" for="ground-max-speed-25">Below 25m/s</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-max-speed-35" name="ground-max-speed" type="radio" value="below35ms">
+              <label class="govuk-label govuk-radios__label" for="ground-max-speed-35">Below 35m/s</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-max-speed-75" name="ground-max-speed" type="radio" value="below75ms" checked>
+              <label class="govuk-label govuk-radios__label" for="ground-max-speed-75">Below 75m/s</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-max-speed-120" name="ground-max-speed" type="radio" value="below120ms">
+              <label class="govuk-label govuk-radios__label" for="ground-max-speed-120">Below 120m/s</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-8">
+        <fieldset class="govuk-fieldset" aria-describedby="ground-population-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Ground population density
+          </legend>
+          <div id="ground-population-hint" class="govuk-hint govuk-!-margin-bottom-3">
+            The Office for National Statistics (ONS) publishes population density data you can use to judge these bands. You can visualise it using
+            <a class="govuk-link govuk-link--no-visited-state" href="https://mapmaker.geods.ac.uk/" target="_blank" rel="noopener noreferrer">mapmaker.geods.ac.uk (opens in new window)</a>.
+          </div>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-population-controlled" name="ground-population" type="radio" value="controlled">
+              <label class="govuk-label govuk-radios__label" for="ground-population-controlled">
+                Controlled (no uninvolved persons)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-population-sparse" name="ground-population" type="radio" value="sparse_lt5km2">
+              <label class="govuk-label govuk-radios__label" for="ground-population-sparse">
+                Sparsely populated (&lt;5/km²)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-population-light" name="ground-population" type="radio" value="light_lt50km2">
+              <label class="govuk-label govuk-radios__label" for="ground-population-light">
+                Lightly populated (&lt;50/km²)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-population-populated" name="ground-population" type="radio" value="populated_lt500km2" checked>
+              <label class="govuk-label govuk-radios__label" for="ground-population-populated">
+                Populated (&lt;500/km²)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="ground-population-dense" name="ground-population" type="radio" value="dense_gt500km2">
+              <label class="govuk-label govuk-radios__label" for="ground-population-dense">
+                Densely or extremely densely populated (&gt;500/km²)
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-4">Section 2: Airspace risk inputs</h2>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-8">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Airspace type
+          </legend>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="airspace-arc-a" name="airspace-arc" type="radio" value="arcA">
+              <label class="govuk-label govuk-radios__label" for="airspace-arc-a">
+                Atypical / segregated (ARC-a)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="airspace-arc-b" name="airspace-arc" type="radio" value="arcB">
+              <label class="govuk-label govuk-radios__label" for="airspace-arc-b">
+                Uncontrolled Class G, rural, below 500ft (ARC-b)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="airspace-arc-c" name="airspace-arc" type="radio" value="arcC" checked>
+              <label class="govuk-label govuk-radios__label" for="airspace-arc-c">
+                Uncontrolled Class G, urban or above 500ft (ARC-c)
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="airspace-arc-d" name="airspace-arc" type="radio" value="arcD">
+              <label class="govuk-label govuk-radios__label" for="airspace-arc-d">
+                Controlled airspace (ARC-d)
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-4">Section 3: Mitigations</h2>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-9">
+        <fieldset class="govuk-fieldset" aria-describedby="mitigations-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Operational mitigations
+          </legend>
+          <div id="mitigations-hint" class="govuk-hint govuk-!-margin-bottom-4">
+            Select any that apply. You cannot combine both Impact energy reductions (low robustness and high robustness); choosing one clears the other.
+          </div>
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="mitigation-m1a-input" name="mitigation-m1a" type="checkbox" value="yes">
+              <label class="govuk-label govuk-checkboxes__label" for="mitigation-m1a-input">
+                Sheltering applies (M1A) (<span aria-hidden="true">−</span><span class="govuk-visually-hidden">Minus</span>1 GRC)
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="mitigation-m1b-input" name="mitigation-m1b" type="checkbox" value="yes">
+              <label class="govuk-label govuk-checkboxes__label" for="mitigation-m1b-input">
+                Operational restrictions apply (M1B) (<span aria-hidden="true">−</span><span class="govuk-visually-hidden">Minus</span>1 GRC)
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="mitigation-strategic-input" name="mitigation-strategic-arc" type="checkbox" value="yes">
+              <label class="govuk-label govuk-checkboxes__label" for="mitigation-strategic-input">
+                Strategic ARC mitigation applies (<span aria-hidden="true">−</span><span class="govuk-visually-hidden">Minus</span>1 ARC)
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="mitigation-m2-low-input" name="mitigation-m2-low" type="checkbox" value="yes" checked>
+              <label class="govuk-label govuk-checkboxes__label" for="mitigation-m2-low-input">
+                Impact energy reduction, low robustness (M2) (<span aria-hidden="true">−</span><span class="govuk-visually-hidden">Minus</span>1 GRC)
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="mitigation-m2-high-input" name="mitigation-m2-high" type="checkbox" value="yes">
+              <label class="govuk-label govuk-checkboxes__label" for="mitigation-m2-high-input">
+                Impact energy reduction, high robustness (M2) (<span aria-hidden="true">−</span><span class="govuk-visually-hidden">Minus</span>2 GRC)
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-!-margin-top-9">
+        <button type="button" class="govuk-button" data-module="govuk-button">
+          Continue to application
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
