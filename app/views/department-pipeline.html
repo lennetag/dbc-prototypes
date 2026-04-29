@@ -1,0 +1,109 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Department Pipeline" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <a href="/e2e-journey" class="govuk-back-link govuk-!-margin-bottom-6">Back to Approvals and Digital Business Cases</a>
+
+    <h1 class="govuk-heading-xl">Department Pipeline</h1>
+
+    <p class="govuk-body govuk-!-margin-bottom-6">
+      Active digital business cases shown on a five-year quarterly timeline. Use this view for portfolio discussions.
+    </p>
+
+    <section class="app-pipeline-summary" aria-labelledby="pipeline-summary-heading">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-4" id="pipeline-summary-heading">Pipeline summary</h2>
+
+      <div class="app-pipeline-summary__grid">
+        <article class="app-pipeline-summary__card" aria-labelledby="stat-pipeline-value">
+          <h3 class="app-pipeline-summary__label" id="stat-pipeline-value">Total pipeline value</h3>
+          <p class="app-pipeline-summary__value">£{{ stats.totalValueMillions }}m</p>
+        </article>
+
+        <article class="app-pipeline-summary__card" aria-labelledby="stat-active-projects">
+          <h3 class="app-pipeline-summary__label" id="stat-active-projects">Active projects</h3>
+          <p class="app-pipeline-summary__value">{{ stats.projectCount }}</p>
+        </article>
+<!-- 
+        <article class="app-pipeline-summary__card" aria-labelledby="stat-awaiting">
+          <h3 class="app-pipeline-summary__label" id="stat-awaiting">Awaiting full approval</h3>
+          <p class="app-pipeline-summary__value">{{ stats.unapprovedCount }}</p>
+          <p class="app-pipeline-summary__hint">Cases with outstanding governance sign-off.</p>
+        </article>
+
+        <article class="app-pipeline-summary__card" aria-labelledby="stat-approved">
+          <h3 class="app-pipeline-summary__label" id="stat-approved">Fully approved cases</h3>
+          <p class="app-pipeline-summary__value">{{ stats.approvedCount }}</p>
+        </article> -->
+      </div>
+
+      <!-- <div class="app-pipeline-summary__grid app-pipeline-summary__grid--tail">
+        <article class="app-pipeline-summary__card app-pipeline-summary__card--span" aria-labelledby="stat-in-development">
+          <h3 class="app-pipeline-summary__label" id="stat-in-development">In discovery, Alpha or Beta</h3>
+          <p class="app-pipeline-summary__value">{{ stats.inDevelopmentCount }}</p>
+          <p class="app-pipeline-summary__hint">Cases in formative service phases.</p>
+        </article>
+      </div> -->
+    </section>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Active cases — quarterly timeline</h2>
+
+    <p class="govuk-body">
+      Each row is one business case. Shaded quarters show indicative delivery or funding phases on the departmental plan (Q2&nbsp;2026 to Q1&nbsp;2031, 20 quarters).
+    </p>
+
+    <div class="app-pipeline-gantt" role="region" aria-label="Quarterly timeline of active business cases" tabindex="0">
+      <div class="app-pipeline-gantt__scroll">
+        <table class="govuk-table app-pipeline-gantt__table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header app-pipeline-gantt__sticky-head">Business case</th>
+              {% for q in quarters %}
+              <th scope="col" class="govuk-table__header govuk-body-s app-pipeline-gantt__quarter-head">{{ q.label }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for row in pipelineCases %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header app-pipeline-gantt__sticky-cell">
+                <a class="govuk-link govuk-link--no-visited-state" href="/view-approvals/{{ row.slug }}">{{ row.title }}</a>
+                <span class="govuk-visually-hidden">. Bar shows quarters {{ row.startQuarterIndex + 1 }} to {{ row.startQuarterIndex + row.durationQuarters }} on the timeline.</span>
+              </th>
+              {% for q in quarters %}
+              <td class="govuk-table__cell app-pipeline-gantt__cell {% if q.index >= row.startQuarterIndex and q.index < row.startQuarterIndex + row.durationQuarters %}app-pipeline-gantt__cell--bar app-pipeline-gantt__cell--shade-{{ row.rowIndex % 5 }}{% endif %}">
+                {% if q.index >= row.startQuarterIndex and q.index < row.startQuarterIndex + row.durationQuarters %}
+                <span class="govuk-visually-hidden">Included</span>
+                {% else %}
+                <span class="govuk-visually-hidden">Not included</span>
+                {% endif %}
+              </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">Cases in development</h2>
+
+    <p class="govuk-body">Business cases currently in Discovery, Alpha or Beta (for detail, follow the link):</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      {% for c in inDevelopment %}
+      <li>
+        <a class="govuk-link govuk-link--no-visited-state" href="/view-approvals/{{ c.slug }}">{{ c.title }}</a>
+        <span class="govuk-body-s govuk-!-display-block govuk-!-margin-top-1 govuk-hint">{{ c.reference }} · {{ c.stage }} · £{{ c.valueMillions }}m</span>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</div>
+{% endblock %}

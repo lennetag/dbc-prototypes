@@ -1,0 +1,51 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Approvals you are involved in" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <a href="/e2e-journey" class="govuk-back-link govuk-!-margin-bottom-6">Back to Approvals and Digital Business Cases</a>
+
+    <h1 class="govuk-heading-xl">Approvals you are involved in</h1>
+
+    <p class="govuk-body">
+      Spending and programme approvals that need your attention, or where you are copied for assurance. Dates are Gateway or internal board deadlines unless stated otherwise.
+    </p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Approval requests</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Project name</th>
+          <th scope="col" class="govuk-table__header">Type</th>
+          <th scope="col" class="govuk-table__header">Due date</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value (£m)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for p in projects %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold" href="/view-approvals/{{ p.slug }}">{{ p.projectName }}</a>
+            <br>
+            <a class="govuk-link govuk-link--no-visited-state govuk-!-font-size-16" href="/write-and-submit-business-case/overview">Business case</a>
+          </td>
+          <td class="govuk-table__cell">{{ p.projectType }}</td>
+          <td class="govuk-table__cell">{{ p.dueDate }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">{{ p.valueMillions }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p class="govuk-body govuk-!-margin-top-4">
+      <a class="govuk-link govuk-link--no-visited-state" href="#">Add more approvals</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

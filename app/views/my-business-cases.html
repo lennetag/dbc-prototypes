@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "My business cases" %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <a href="/e2e-journey" class="govuk-back-link govuk-!-margin-bottom-6">Back to Approvals and Digital Business Cases</a>
+
+    <h1 class="govuk-heading-xl">My business cases</h1>
+
+    <p class="govuk-body">
+      Business cases where you are the owner or lead author and work is still in progress. Figures and dates are illustrative for this prototype.
+    </p>
+
+    <div class="govuk-form-group govuk-!-margin-bottom-6">
+      <label class="govuk-label govuk-label--m" for="my-business-cases-search">
+        Search business cases
+      </label>
+      <div id="my-business-cases-search-hint" class="govuk-hint">
+        Search by case name, reference, stage or status.
+      </div>
+      <input class="govuk-input govuk-!-width-two-thirds" id="my-business-cases-search" name="my-business-cases-search" type="search" aria-describedby="my-business-cases-search-hint" autocomplete="off">
+    </div>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Cases in progress</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Case name</th>
+          <th scope="col" class="govuk-table__header">Reference</th>
+          <th scope="col" class="govuk-table__header">Stage</th>
+          <th scope="col" class="govuk-table__header">Last updated</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value (£m)</th>
+        </tr>
+      </thead>
+      <tbody id="my-business-cases-tbody" class="govuk-table__body">
+        {% for c in casesInProgress %}
+        {% set searchBlob = c.title ~ ' ' ~ c.reference ~ ' ' ~ c.stage ~ ' ' ~ c.status %}
+        <tr class="govuk-table__row" data-search-text="{{ searchBlob | e }}">
+          <td class="govuk-table__cell">
+            <a class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold" href="/view-approvals/{{ c.slug }}">{{ c.title }}</a>
+          </td>
+          <td class="govuk-table__cell">{{ c.reference }}</td>
+          <td class="govuk-table__cell">{{ c.stage }}</td>
+          <td class="govuk-table__cell">{{ c.lastUpdated }}</td>
+          <td class="govuk-table__cell">{{ c.status }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">{{ c.valueMillions }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var input = document.getElementById('my-business-cases-search')
+    var tbody = document.getElementById('my-business-cases-tbody')
+    if (!input || !tbody) return
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase()
+      tbody.querySelectorAll('[data-search-text]').forEach(function (row) {
+        var hay = (row.getAttribute('data-search-text') || '').toLowerCase()
+        row.hidden = q !== '' && hay.indexOf(q) === -1
+      })
+    })
+  })()
+</script>
+{% endblock %}

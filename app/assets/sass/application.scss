@@ -5,7 +5,34 @@
 
 // Add extra styles here
 
-// E2E journey hub — bordered tiles (grey header, white body)
+// E2E journey hub rows — stretch columns so tiles match tallest in each row (tablet+)
+.app-hub-tile-grid {
+  @media (min-width: 40.0625em) {
+    &::after {
+      content: none;
+      display: none;
+    }
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+
+    > [class*='govuk-grid-column-one-third'] {
+      float: none;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+
+      > .app-dbc-tile {
+        flex: 1 1 auto;
+        height: auto;
+        min-height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
 .app-dbc-tile {
   border: 1px solid #b1b4b6;
   display: flex;
@@ -344,4 +371,202 @@
 
 .app-caa-flow-section--muted .govuk-heading-m {
   margin-top: 0;
+}
+
+// Department pipeline — summary stat cards (GDS Transport; blue accent via border / heading rule only)
+.app-pipeline-summary {
+  margin-bottom: govuk-spacing(6);
+  padding: govuk-spacing(5);
+  background: #f3f2f1;
+  border: 1px solid #b1b4b6;
+  font-family: "GDS Transport", arial, sans-serif;
+
+  @media (min-width: 40.0625em) {
+    padding: govuk-spacing(6);
+  }
+}
+
+.app-pipeline-summary .govuk-heading-m {
+  margin-top: 0;
+  padding-bottom: govuk-spacing(1);
+  border-bottom: 2px solid #1d70b8;
+  font-family: inherit;
+}
+
+.app-pipeline-summary__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: govuk-spacing(4);
+  margin-bottom: 0;
+
+  @media (min-width: 40.0625em) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 65.0625em) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.app-pipeline-summary__grid--tail {
+  margin-top: govuk-spacing(4);
+
+  @media (min-width: 40.0625em) {
+    max-width: none;
+  }
+
+  @media (min-width: 65.0625em) {
+    grid-template-columns: repeat(4, 1fr);
+
+    .app-pipeline-summary__card--span {
+      grid-column: span 2;
+      max-width: 24rem;
+    }
+  }
+}
+
+.app-pipeline-summary__card {
+  position: relative;
+  margin: 0;
+  padding: govuk-spacing(4);
+  background: #ffffff;
+  border: 1px solid #b1b4b6;
+  border-left-width: 6px;
+  border-left-color: #1d70b8;
+  box-shadow: 0 2px 0 #d0d3d6;
+  font-family: inherit;
+}
+
+.app-pipeline-summary__label {
+  margin: 0 0 govuk-spacing(2);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  font-family: inherit;
+  color: #505a5f;
+}
+
+@media (min-width: 40.0625em) {
+  .app-pipeline-summary__label {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+}
+
+.app-pipeline-summary__value {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.1;
+  font-weight: 700;
+  font-family: inherit;
+  color: #0b0c0c;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 40.0625em) {
+  .app-pipeline-summary__value {
+    font-size: 42px;
+  }
+}
+
+.app-pipeline-summary__hint {
+  margin: govuk-spacing(2) 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  font-family: inherit;
+  color: #505a5f;
+}
+
+// Department pipeline — quarter Gantt (single blue accent; distinguishes rows by saturation only optional — here flat fill)
+.app-pipeline-gantt {
+  margin-top: govuk-spacing(4);
+  margin-bottom: govuk-spacing(2);
+  font-family: "GDS Transport", arial, sans-serif;
+
+  table {
+    font-family: inherit;
+  }
+}
+
+.app-pipeline-gantt__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.app-pipeline-gantt__table {
+  margin-bottom: 0;
+  min-width: 72rem;
+
+  .govuk-table__header,
+  .govuk-table__cell {
+    vertical-align: middle;
+    font-family: inherit;
+  }
+}
+
+.app-pipeline-gantt__sticky-head {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  min-width: 14rem;
+  max-width: 18rem;
+  background: #f3f2f1;
+  box-shadow: 4px 0 0 #f3f2f1;
+}
+
+.app-pipeline-gantt__sticky-cell {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  min-width: 14rem;
+  max-width: 18rem;
+  background: #ffffff;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+  word-break: normal;
+}
+
+.app-pipeline-gantt__quarter-head {
+  min-width: 3.1rem;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  background: #f3f2f1;
+}
+
+.app-pipeline-gantt__cell {
+  padding: 0;
+  min-width: 2.25rem;
+  height: 2.75rem;
+  border-left: 1px solid #d0d3d6;
+  background: #ffffff;
+}
+
+.app-pipeline-gantt__cell--bar {
+  border-left: 0;
+}
+
+.app-pipeline-gantt__cell--shade-0,
+.app-pipeline-gantt__cell--shade-1,
+.app-pipeline-gantt__cell--shade-2,
+.app-pipeline-gantt__cell--shade-3,
+.app-pipeline-gantt__cell--shade-4 {
+  background-color: #1d70b8;
+}
+
+.app-pipeline-gantt thead .govuk-table__row:first-child .app-pipeline-gantt__sticky-head {
+  vertical-align: bottom;
+}
+
+.app-pipeline-gantt tbody .govuk-table__row:hover .app-pipeline-gantt__sticky-cell {
+  background: #fafafa;
+}
+
+.app-pipeline-gantt tbody .govuk-table__row:hover .app-pipeline-gantt__cell:not(.app-pipeline-gantt__cell--bar) {
+  background: #fafafa;
 }

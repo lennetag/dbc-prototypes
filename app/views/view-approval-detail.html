@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = summary.title %}
+{% set serviceName = "Approvals and Digital Business Cases" %}
+{% set serviceUrl = "/e2e-journey" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <a href="/view-approvals" class="govuk-back-link govuk-!-margin-bottom-6">Back to approvals</a>
+
+    <h1 class="govuk-heading-xl">{{ summary.title }}</h1>
+
+    <h2 class="govuk-heading-m">Case summary</h2>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Reference</dt>
+        <dd class="govuk-summary-list__value">{{ summary.reference }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Department</dt>
+        <dd class="govuk-summary-list__value">{{ summary.department }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Total value</dt>
+        <dd class="govuk-summary-list__value">{{ summary.totalValue }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Type of business case</dt>
+        <dd class="govuk-summary-list__value">{{ summary.businessCaseType }}</dd>
+      </div>
+    </dl>
+
+    <h2 class="govuk-heading-m">Approvals</h2>
+
+    <div class="govuk-!-margin-bottom-2">
+      <p class="govuk-body">
+        RAG indicates Red, Amber or Green against the evidence pack for each approver role.
+      </p>
+    </div>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Approver role</th>
+          <th scope="col" class="govuk-table__header">Rating (RAG)</th>
+          <th scope="col" class="govuk-table__header">Further information requested</th>
+          <th scope="col" class="govuk-table__header">Comments</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for row in summary.approvals %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">{{ row.role }}</td>
+          <td class="govuk-table__cell">
+            {% if row.rag === 'green' %}
+              <strong class="govuk-tag govuk-tag--green">{{ row.rag | capitalize }}</strong>
+            {% elif row.rag === 'amber' %}
+              <strong class="govuk-tag govuk-tag--yellow">{{ row.rag | capitalize }}</strong>
+            {% else %}
+              <strong class="govuk-tag govuk-tag--red">{{ row.rag | capitalize }}</strong>
+            {% endif %}
+          </td>
+          <td class="govuk-table__cell">{{ row.furtherInfoRequested }}</td>
+          <td class="govuk-table__cell">{{ row.comments }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+{% endblock %}
